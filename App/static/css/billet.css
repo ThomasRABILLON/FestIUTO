@@ -1,0 +1,32 @@
+.billet-all-stars {
+    background: url("../images/billet_all_star.png");
+}
+
+.billet-2-jour {
+    background: url("../images/billet_2_jour.png");
+}
+
+.billet-1-jour {
+    background: url("../images/billet_1_jour.png");
+}
+
+.billet {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 4vh 10vw 0 10vw;
+    width: 80%;
+    height: 20vh;
+    position: relative;
+}
+
+.billet h2 {
+    position: absolute;
+    top: 0;
+    margin: 0.5em;
+}
+
+.billet button {
+    position: absolute;
+    bottom: 0;
+    margin: 1em;
+}

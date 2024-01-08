@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+{% for event in events %}
+<div>
+    <h3>{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</h3>
+    <br>
+    <p>Journée {{ event.get_jour_arrive() }} à {{ event.get_heure_arrive() }}h</p>
+    <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
+    <form action="{{ url_for('reservation', id=event.get_id()) }}" method="post">
+        {{ form.csrf_token }}
+        <input type="submit" value="Réserver">
+    </form>
+</div>
+{% endfor %}
+
+{% endblock %}

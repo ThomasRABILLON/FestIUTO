@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/billet.css') }}">
+
+<div class="billet billet-all-stars">
+    <h2>Pass All Stars</h2>
+    <button onclick="window.location.href=`{{ url_for('achat_billet', id=billet3.get_id()) }}`"><img src="{{ url_for('static', filename='images/logo_billet.png') }}" alt="logo billet"> {{ billet3.get_prix() }}€</button>
+</div>
+
+<div class="billet billet-2-jour">
+    <h2>Pass 2 jour</h2>
+    <button onclick="window.location.href=`{{ url_for('achat_billet', id=billet2.get_id()) }}`"><img src="{{ url_for('static', filename='images/logo_billet.png') }}" alt="logo billet"> {{ billet2.get_prix() }}€</button>
+</div>
+
+<div class="billet billet-1-jour">
+    <h2>Pass 1 jour</h2>
+    <button onclick="window.location.href=`{{ url_for('achat_billet', id=billet1.get_id()) }}`"><img src="{{ url_for('static', filename='images/logo_billet.png') }}" alt="logo billet"> {{ billet1.get_prix() }}€</button>
+</div>
+
+
+{% endblock %}

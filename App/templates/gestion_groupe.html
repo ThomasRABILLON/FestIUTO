@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="groupe">
+    <div class="groupe__image">
+        <img src="" alt="groupe">
+    </div>
+    <div class="groupe__info">
+        <h2>{{ groupe.get_nom_groupe() }}</h2>
+        <p>{{ groupe.get_description() }}</p>
+        <p>{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
+        <h3>Les artistes</h3>
+        <ul>
+        {% for artiste in artistes %}
+            <li>
+                <p>{{ artiste.get_nom() }} {{ artiste.get_prenom() }}</p>
+                <p>{{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}</p>
+            </li>
+        {% endfor %}
+      </ul>
+      <button onclick="window.location.href=`{{ url_for('ajouter_artiste', nom=groupe.get_nom_groupe()) }}`">Ajouter artiste</button>
+      <button onclick="window.location.href=`{{ url_for('evenements_groupe', nom=groupe.get_nom_groupe()) }}`">Voir les évènements</button>
+    </div>
+</div>
+
+{% endblock %}

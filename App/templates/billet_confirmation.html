@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<h2>Billet pour {{ billet.get_libelle() }}</h2>
+<form action="{{ url_for('achat_billet', id=id) }}" method="post">
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {% if id==1 %}
+        {{ form.date_debut(id="date", min="1", max="3", value="1") }}
+    {% elif id==2 %}
+        {{ form.date_debut(id="date", min="1", max="2", value="1") }}
+    {% else %}
+        {{ form.date_debut(id="date", min="1", max="1", value="1") }}
+    {% endif %}
+    <label for="date">{{ form.date_debut.label }}</label>
+    <input type="submit" value="Acheter">
+</form>
+
+{% endblock %}

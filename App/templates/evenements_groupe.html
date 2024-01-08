@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+<main>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Type évènement</th>
+                <th scope="col">Début évènment</th>
+                <th scope="col">Fin évènement</th>
+                <th scope="col">Lieu/Emplacement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ Type_evenement.get_type_evenement_by_id(Evenement.get_evenement_by_id(event.get_ref_evenement()).get_id_type_evenement()).get_libelle() }}</td>
+                    <td>Journée {{ Evenement.get_evenement_by_id(event.get_ref_evenement()).get_jour_arrive() }} à {{ Evenement.get_evenement_by_id(event.get_ref_evenement()).get_heure_arrive() }}h</td>
+                    <td>Journée {{ Evenement.get_evenement_by_id(event.get_ref_evenement()).get_jour_depart() }} à {{ Evenement.get_evenement_by_id(event.get_ref_evenement()).get_heure_depart() }}h</td>
+                    <td>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}/{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}

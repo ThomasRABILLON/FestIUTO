@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<form action="{{ url_for('creer_groupe') }}" method="post">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        {{ form.nom.label }}
+        {{ form.nom(size=20, class="form-control", placeholder="Nom du groupe") }}
+    </div>
+    <div class="form-group">
+        {{ form.description.label }}
+        {{ form.description(size=20, class="form-control", placeholder="Description du groupe") }}
+    </div>
+    <div class="form-group">
+        {{ form.style.label }}
+        {{ form.style(placeholder="Style du groupe") }}
+    </div>
+    <input type="submit" value="Créer">
+</form>
+
+{% endblock %}

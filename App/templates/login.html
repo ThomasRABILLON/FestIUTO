@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }} {% endblock %}
+    <title>{{ title }}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div
+      class="container w-25 position-absolute top-50 start-50 translate-middle border border-1 rounded-5 p-5"
+    >
+      <h1 class="mb-4">{{ title }}</h1>
+      <form method="post" action="/login">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        <div class="form-floating mb-4">
+          {{ form.email(size=20, type="email", class="form-control",
+          id="floatingInput", placeholder="name@example.com" ) }}
+          <label for="floatingInput">{{ form.email.label }}</label>
+        </div>
+        <div class="form-floating mb-4">
+          {{ form.mdp(size=20, type="password", class="form-control",
+          id="floatingPassword", placeholder="Mot de passe" ) }}
+          <label for="floatingPassword">{{ form.mdp.label }}</label>
+        </div>
+        <input type="submit" class="btn btn-primary" />
+        <a
+          class="link-opacity-50-hover ms-5 end-100"
+          href="{{url_for('register')}}"
+          >Créer un compte</a
+        >
+      </form>
+    </div>
+
+    {% block scripts %} {{ bootstrap.load_js() }} {% endblock %}
+  </body>
+</html>

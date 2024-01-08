@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<main>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Mes billets</h1>
+    </div>
+  </div>
+  {% if billets|length == 0 %}
+  <div class="row">
+    <div class="col-12">
+      <p>Vous n'avez pas encore de billet</p>
+    </div>
+  </div>
+  {% else %}
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Libelle</th>
+            <th scope="col">Durée</th>
+            <th scope="col">Début validité</th>
+            <th scope="col">Fin validité</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for billet in billets %}
+          <tr>
+            <td>{{ Type_billet.get_type_billet_by_id(billet.get_id_type_billet()).get_libelle() }}</td>
+            <td>{{ Type_billet.get_type_billet_by_id(billet.get_id_type_billet()).get_duree() }}</td>
+            <td>{{ billet.get_debut_validite() }}</td>
+            <td>{{ billet.get_fin_validite() }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+</div>
+</main>
+
+{% endblock %}

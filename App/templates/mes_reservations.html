@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<main>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Mes réservations</h1>
+    </div>
+  </div>
+  {% if reservations|length == 0 %}
+  <div class="row">
+    <div class="col-12">
+      <p>Vous n'avez pas encore de billet</p>
+    </div>
+  </div>
+  {% else %}
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Groupe</th>
+            <th scope="col">Début évènment</th>
+            <th scope="col">Fin évènement</th>
+            <th scope="col">Type évènement</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserv in reservations %}
+          <tr>
+            <td>{{ Groupe.get_groupe_by_id(Evenement.get_evenement_by_id(reserv.get_ref_evenement()).get_id_g()).get_nom_groupe() }}</td>
+            <td>Journée {{ Evenement.get_evenement_by_id(reserv.get_ref_evenement()).get_jour_arrive() }} à {{ Evenement.get_evenement_by_id(reserv.get_ref_evenement()).get_heure_arrive() }}h</td>
+            <td>Journée {{ Evenement.get_evenement_by_id(reserv.get_ref_evenement()).get_jour_depart() }} à {{ Evenement.get_evenement_by_id(reserv.get_ref_evenement()).get_heure_depart() }}h</td>
+            <td>{{ Type_evenement.get_type_evenement_by_id(Evenement.get_evenement_by_id(reserv.get_ref_evenement()).get_id_type_evenement()).get_libelle() }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+</div>
+</main>
+
+{% endblock %}
