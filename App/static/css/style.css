@@ -87,7 +87,6 @@ h1 {
 	.slide-track {
 		animation: scroll 25s linear infinite;
 		display: flex;
-		width: calc(250px * 14);
 	}
 	
 	.slide {
