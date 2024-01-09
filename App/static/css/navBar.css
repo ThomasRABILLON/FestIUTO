@@ -1,13 +1,14 @@
 nav {
-    background-color: #FF9505;
+    background-color: #05003d;
+    color: #c9c9c9;
     overflow: hidden;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 1;
-    display: flex;
     padding-top: 1em;
     padding-bottom: 1em;
-    margin-bottom: 4em;
+    box-shadow: 0px 5px 5px white/*#008cff*/;
 }
 
 nav ul {
@@ -15,18 +16,17 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #FF9505;
     display: flex;
     flex-basis: 100vw;
 }
 
 nav li {
-    margin-right: auto;
+    margin: auto;
 }
 
 nav li a {
     display: block;
-    color: black;
+    color: white;
     text-align: center;
     text-decoration: none;
     padding-top: 0.5em;
@@ -42,6 +42,8 @@ nav img {
     margin-right: 3em;
     height: 2.5em;
     width: 2.5em;
+    filter: invert(1);
+    cursor: pointer;
 }
 
 

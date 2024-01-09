@@ -1,22 +1,25 @@
+* {
+	color: #c9c9c9
+}
+
 body {
-    background-color: #353531;
+    background-color: #05003d;
     font-family: 'Roboto', sans-serif;
     margin: 0;
+	margin-top: 16vh;
     padding: 0;
 }
 
 main {
-    background-color: #FF9505;
-    border: 1px solid #FF9505;
-    border-radius: 16px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    background-color: #00025f;
+    border: 1px solid 00025f;
+    border-radius: 8px;
     margin: 0 4vw;
     padding: 4em 2em 4em 8em;
     display: flex;
 }
 
 h1 {
-    color: #000;
     font-size: 6em;
 }
 
@@ -30,7 +33,6 @@ h1 {
 
 .programme {
     margin: 4vh 4vw 0 4vw;
-    color: white;
 }
 
 .caroussel {
@@ -83,7 +85,7 @@ h1 {
 	}
 	
 	.slide-track {
-		animation: scroll 40s linear infinite;
+		animation: scroll 25s linear infinite;
 		display: flex;
 		width: calc(250px * 14);
 	}

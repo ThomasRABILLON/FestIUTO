@@ -22,16 +22,18 @@
         <li><a href="{{ url_for('reservation') }}">Reservation</a></li>
         <li><a href="{{ url_for('groupes') }}">Les groupes</a></li>
         <li><a href="#">Nous contacter</a></li>
+        <li>
+          <div class="dropdown">
+            <img src="{{ url_for('static', filename='images/utilisateur.png') }}" alt="utilisateur">
+            <div class="dropdown-content">
+              <a href="{{ url_for('mes_billets') }}">Mes billets</a>
+              <a href="{{ url_for('mes_reservations') }}">Mes réservations</a>
+              <a href="{{ url_for('mes_favoris') }}">Mes groupes favoris</a>
+              <a href="{{ url_for('logout') }}">Déconnexion</a>
+            </div>
+          </div>
+        </li>
       </ul>
-      <div class="dropdown">
-        <img src="{{ url_for('static', filename='images/utilisateur.png') }}" alt="utilisateur">
-        <div class="dropdown-content">
-          <a href="{{ url_for('mes_billets') }}">Mes billets</a>
-          <a href="{{ url_for('mes_reservations') }}">Mes réservations</a>
-          <a href="{{ url_for('mes_favoris') }}">Mes groupes favoris</a>
-          <a href="{{ url_for('logout') }}">Déconnexion</a>
-        </div>
-      </div>
     </nav>
 
     {% block main %} {% endblock %} 
