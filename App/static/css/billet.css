@@ -1,32 +1,85 @@
 .billet-all-stars {
-    background: url("../images/billet_all_star.png");
+  background: url("../images/billet_all_star.png");
 }
 
 .billet-2-jour {
-    background: url("../images/billet_2_jour.png");
-}
-
-.billet-1-jour {
-    background: url("../images/billet_1_jour.png");
+  background: url("../images/billet_2_jour.png");
 }
 
 .billet {
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin: 4vh 10vw 0 10vw;
-    width: 80%;
-    height: 20vh;
-    position: relative;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 4vh 10vw 0 10vw;
+  width: 80%;
+  height: 20vh;
+  position: relative;
+}
+
+.billet-1-jour {
+  background: url("../images/billet_1_jour.png");
+  margin-bottom: 5em;
 }
 
 .billet h2 {
-    position: absolute;
-    top: 0;
-    margin: 0.5em;
+  position: absolute;
+  top: 0;
+  margin: 0.5em;
 }
 
 .billet button {
-    position: absolute;
-    bottom: 0;
-    margin: 1em;
+  position: absolute;
+  bottom: 0;
+  margin: 1em;
+}
+
+.position_text {
+  border-bottom: 1px solid white;
+  margin: 4vh 10vw 0 10vw;
+}
+
+.colorb2 {
+  color: red;
+}
+
+.colorb3 {
+  color: blue;
+}
+
+button {
+  right: 0;
+}
+
+p {
+  font-size: 1.5em;
+}
+
+.prix {
+  color: black;
+}
+
+/* texte rainbox ticket all start */
+
+.rainbow {
+  font-size: 32px;
+  font-family: monospace;
+  letter-spacing: 5px;
+  animation: colorRotate 6s linear 0s infinite;
+}
+
+@keyframes colorRotate {
+  from {
+    color: #6666ff;
+  }
+  10% {
+    color: #0099ff;
+  }
+  50% {
+    color: #00ff00;
+  }
+  75% {
+    color: #ff3399;
+  }
+  100% {
+    color: #6666ff;
+  }
 }
