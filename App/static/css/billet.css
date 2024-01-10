@@ -38,15 +38,25 @@
 }
 
 .colorb2 {
-  color: red;
+  font-size: 32px;
+  font-family: monospace;
+  letter-spacing: 5px;
+  animation: colorRotate2 6s linear 0s infinite;
 }
 
 .colorb3 {
-  color: blue;
+  font-size: 32px;
+  font-family: monospace;
+  letter-spacing: 5px;
+  animation: colorRotate3 6s linear 0s infinite;
 }
 
 button {
   right: 0;
+  background-color: #0099ff;
+  border-color: #0099ff;
+  margin-bottom: 1em;
+  padding: 0.5vh 0.5vw;
 }
 
 p {
@@ -55,6 +65,7 @@ p {
 
 .prix {
   color: black;
+  z-index: 1;
 }
 
 /* texte rainbox ticket all start */
@@ -81,5 +92,122 @@ p {
   }
   100% {
     color: #6666ff;
+  }
+}
+
+/*titre pass 2 jour*/
+@keyframes colorRotate2 {
+  from {
+    color: #c01556;
+  }
+  10% {
+    color: #ff0180;
+  }
+  50% {
+    color: #b40e38;
+  }
+  75% {
+    color: #ac1717;
+  }
+  100% {
+    color: #ff0000;
+  }
+}
+
+/*titre pass 1 jour*/
+@keyframes colorRotate3 {
+  from {
+    color: #580000;
+  }
+  10% {
+    color: #012025;
+  }
+  50% {
+    color: #072147;
+  }
+  75% {
+    color: #121736;
+  }
+  100% {
+    color: #1c04f1;
+  }
+}
+
+/*Bouton style*/
+.rainbow2 {
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.rainbow-5:hover {
+  background-image: linear-gradient(
+    to right,
+    #e7484f,
+    #e7484f 16.65%,
+    #f68b1d 16.65%,
+    #f68b1d 33.3%,
+    #fced00 33.3%,
+    #fced00 49.95%,
+    #009e4f 49.95%,
+    #009e4f 66.6%,
+    #00aac3 66.6%,
+    #00aac3 83.25%,
+    #732982 83.25%,
+    #732982 100%,
+    #e7484f 100%
+  );
+  filter: blur(1px); /* Ajustez la valeur de flou selon vos préférences */
+  z-index: 0; /* Placez-le derrière le contenu principal */
+  animation: slidebg 4s linear infinite;
+  border: none;
+}
+
+.rainbow-4:hover {
+  background-image: linear-gradient(
+    to right,
+    #1f4aff,
+    #1f4aff 16.65%,
+    #4b7bff 16.65%,
+    #4b7bff 33.3%,
+    #8fbfff 33.3%,
+    #8fbfff 49.95%,
+    #0066cc 49.95%,
+    #0066cc 66.6%,
+    #3399ff 66.6%,
+    #3399ff 83.25%,
+    #4d4dff 83.25%,
+    #4d4dff 100%,
+    #1f4aff 100%
+  );
+
+  animation: slidebg 3s linear infinite;
+  border: none;
+}
+.rainbow-3:hover {
+  background-image: linear-gradient(
+    to right,
+    #ff0000,
+    #ff0000 16.65%,
+    #cc0000 16.65%,
+    #990000 33.3%,
+    #ff3333 33.3%,
+    #ff3333 49.95%,
+    #660000 49.95%,
+    #660000 66.6%,
+    #cc3333 66.6%,
+    #cc3333 83.25%,
+    #800000 83.25%,
+    #800000 100%,
+    #ff0000 100%
+  );
+  animation: slidebg 3s linear infinite;
+  border: none;
+}
+
+@keyframes slidebg {
+  to {
+    background-position: 20vw;
   }
 }

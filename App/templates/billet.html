@@ -21,7 +21,7 @@
 
 <div class="billet billet-all-stars">
     <h2 class="rainbow">Pass All Stars</h2>
-    <button class="btn btn-outline-primary btn-info "
+    <button class="rainbow-5"
         onclick="window.location.href=`{{ url_for('achat_billet', id=billet3.get_id()) }}`"><img
             src="{{ url_for('static', filename='images/logo_billet.png') }}"
             alt="logo billet"> <span class="prix">{{ billet3.get_prix() }}€</span></button>
@@ -43,7 +43,7 @@
 
 <div class="billet billet-2-jour">
     <h2 class="colorb2">Pass 2 jour</h2>
-    <button
+    <button class="rainbow-4"
         onclick="window.location.href=`{{ url_for('achat_billet', id=billet2.get_id()) }}`"><img
             src="{{ url_for('static', filename='images/logo_billet.png') }}"
             alt="logo billet"> <span class="prix">{{ billet2.get_prix() }}€</span></button>
@@ -65,7 +65,7 @@
 
 <div class="billet billet-1-jour">
     <h2 class="colorb3">Pass 1 jour</h2>
-    <button
+    <button class="rainbow-3"
         onclick="window.location.href=`{{ url_for('achat_billet', id=billet1.get_id()) }}`"><img
             src="{{ url_for('static', filename='images/logo_billet.png') }}"
             alt="logo billet"> <span class="prix">{{ billet1.get_prix() }}€
