@@ -3,33 +3,48 @@
 <main>
     <h1>FestIUT'O</h1>
     <section class="presentation">
-        <p>Plongez dans un univers vibrant de créativité et de découvertes : bienvenue à notre festival où l'art, la musique et la culture fusionnent pour créer des moments inoubliables.</p>
+        <p>Plongez dans un univers vibrant de créativité et de découvertes :
+            bienvenue à notre festival où l'art, la musique et la culture
+            fusionnent pour créer des moments inoubliables.</p>
     </section>
-    
+
 </main>
 <section class="programme">
     <h2>Programme</h2>
     <p>Le festival se déroulera du 1er au 3 juin 2018.</p>
     <div class="caroussel">
         <div class="slider">
-            <div class="slide-track" style="width: calc(250px * {{ events|length }} * 2);">
+            <div class="slide-track"
+                style="width: calc(250px * {{ events|length }} * 2);">
                 {% for event in events %}
                 <div class="slide">
                     <div class="event-container">
-                        <h3>{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</h3>
+                        <h3>{{
+                            Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()
+                            }}</h3>
                         <br>
-                        <p>Journée {{ event.get_jour_arrive() }} à {{ event.get_heure_arrive() }}h</p>
-                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
+                        <p>Journée {{ event.get_jour_arrive() }} à {{
+                            event.get_heure_arrive() }}h</p>
+                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom()
+                            }}, emplacement : {{
+                            Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement()
+                            }}</p>
                     </div>
                 </div>
                 {% endfor %}
                 {% for event in events %}
                 <div class="slide">
                     <div class="event-container">
-                        <h3>{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</h3>
+                        <h3>{{
+                            Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()
+                            }}</h3>
                         <br>
-                        <p>Journée {{ event.get_jour_arrive() }} à {{ event.get_heure_arrive() }}h</p>
-                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
+                        <p>Journée {{ event.get_jour_arrive() }} à {{
+                            event.get_heure_arrive() }}h</p>
+                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom()
+                            }}, emplacement : {{
+                            Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement()
+                            }}</p>
                     </div>
                 </div>
                 {% endfor %}
@@ -37,5 +52,4 @@
         </div>
     </div>
 </section>
-
 {% endblock %}
