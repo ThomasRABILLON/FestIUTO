@@ -113,13 +113,23 @@ class CreerGroupeForm(FlaskForm):
         return False
 
 class AjouterArtisteForm(FlaskForm):
-    nom = StringField('Nom de l\'artiste', validators=[DataRequired()])
-    prenom = StringField('Prenom de l\'artiste', validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
     with app.app_context():
-        instrument = SelectField('Instrument de l\'artiste', choices=[(i.get_id(), i.get_nom_instru()) for i in Instrument.get_all_instruments()])
+        instrument = SelectField('Instrument', choices=[(i.get_id(), i.get_nom_instru()) for i in Instrument.get_all_instruments()])
 
     def ajouter_artiste(self, id_g: int) -> None:
         Artiste.insert_new_artiste(self.nom.data, self.prenom.data, id_g, self.instrument.data)
+
+class CreerEvenementForm(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    with app.app_context():
+    #     type_evenement = SelectField('Type', choices=[(i.get_id(), i.get_libelle()) for i in Evenement.get_all_types_evenement()])
+        groupe = SelectField('Groupe', choices=[(i.get_id(), i.get_nom_groupe()) for i in Groupe.get_all_groupes()])
+    #     lieu = SelectField('Lieu', choices=[(i.get_id(), i.get_nom()) for i in Evenement.get_all_lieux()])
+
+    def creer_evenement(self) -> None:
+        Evenement.insert_new_evenement(self.nom.data, self.description.data, self.type_evenement.data, self.groupe.data, self.lieu.data)
 
 # class EditProfilForm(FlaskForm):
 #     pseudo = StringField('Pseudo')

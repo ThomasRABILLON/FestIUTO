@@ -46,3 +46,8 @@ class Groupe(db.Model):
     def insert_new_groupe(nom_groupe: str, description: str, id_style: int) -> None:
         db.session.add(Groupe(nom_groupe, description, id_style))
         db.session.commit()
+
+    @staticmethod
+    def delete_groupe(nom_groupe: str) -> None:
+        db.session.delete(Groupe.get_groupe_by_nom(nom_groupe))
+        db.session.commit()

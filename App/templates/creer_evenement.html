@@ -1,0 +1,18 @@
+{% extends 'admin.html' %} {% block main %}
+
+<form action="{{ url_for('creer_evenement') }}" method="post" id="form">
+<select name="groupe" onchange="document.getElementById('form').submit();">
+    <option value="-1">Selectionner un groupe</option>
+    {% for groupe in Groupe.get_all_groupes() %}
+        {% if selected_groupe != None and groupe.get_id() == selected_groupe.get_id() %}
+            <option value="{{ groupe.get_id() }}" selected>{{ groupe.get_nom_groupe() }}</option>
+        {% else %}
+        <option value="{{ groupe.get_id() }}">{{ groupe.get_nom_groupe() }}</option>
+        {% endif %}
+    {% endfor %}
+</select>
+<input type="number" name="journee" value="{{ journee }}" min="1" max="3" onchange="document.getElementById('form').submit();">
+</form>
+
+
+{% endblock %}

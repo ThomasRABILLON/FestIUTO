@@ -85,6 +85,9 @@ INSERT INTO ARTISTE (id_art, nom, prenom, id_g, id_instru) VALUES(7, 'Doe', 'Joh
 -- INSERT INTO SPECTATEUR (mail, nom, prenom, date_naissance, mot_de_passe) VALUES('jeff@gmail.com', 'Bezos', 'Jeff', date('1990-01-01', '%Y-%m-%d'), "a");
 -- INSERT INTO SPECTATEUR (mail, nom, prenom, date_naissance, mot_de_passe) VALUES('elon@gmail.com', 'Musk', 'Elon', date('1990-01-01', '%Y-%m-%d'), "a");
 
+-- Admin
+INSERT INTO SPECTATEUR (mail, nom, prenom, date_naissance, mot_de_passe) VALUES('admin', '', '', null, 'admin');
+
 -- A_FAVORI
 -- INSERT INTO A_FAVORI (mail, id_g) VALUES('joe@gmail.com', 1);
 -- INSERT INTO A_FAVORI (mail, id_g) VALUES('joe@gmail.com', 2);

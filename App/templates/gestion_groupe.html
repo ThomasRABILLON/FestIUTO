@@ -1,27 +1,43 @@
-{% extends 'base.html' %} {% block main %}
+{% extends 'admin.html' %} {% block main %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('gestion_groupes') }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour aux groupes</a>
+</div>
 
-<div class="groupe">
-    <div class="groupe__image">
-        <img src="" alt="groupe">
-    </div>
-    <div class="groupe__info">
-        <h2>{{ groupe.get_nom_groupe() }}</h2>
-        <p>{{ groupe.get_description() }}</p>
-        <p>{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
-        <h3>Les artistes</h3>
-        <ul>
-        {% for artiste in artistes %}
-            <li>
-                <p>{{ artiste.get_nom() }} {{ artiste.get_prenom() }}</p>
-                <p>{{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}</p>
-            </li>
-        {% endfor %}
-      </ul>
-      <button onclick="window.location.href=`{{ url_for('ajouter_artiste', nom=groupe.get_nom_groupe()) }}`">Ajouter artiste</button>
-      <button onclick="window.location.href=`{{ url_for('evenements_groupe', nom=groupe.get_nom_groupe()) }}`">Voir les évènements</button>
-    </div>
+
+<div class="container-sm mt-3">
+    <h2 class="fs-3 text">{{ groupe.get_nom_groupe() }}</h2>
+    <p class="fs-6 text">{{ groupe.get_description() }}</p>
+    <p  class="fs-6 text">Style : {{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
+    <br>
+    <h3 class="fs-4 text">Les artistes</h3>
+    {% if artistes|length == 0 %}
+    <p class="fs-6 text">Aucun artiste dans ce groupe</p>
+    {% else %}
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Nom</th>
+                <th scope="col" class="text-center">Prénom</th>
+                <th scope="col" class="text-center">Instrument</th>
+            </tr>
+        </thead>
+    {% for artiste in artistes %}
+        <tr>
+            <th scope="row" class="align-middle text-center">{{ artiste.get_id() }}</td>
+            <td class="align-middle text-center">{{ artiste.get_nom() }}</td>
+            <td class="align-middle text-center">{{ artiste.get_prenom() }}</td>
+            <td class="align-middle text-center">{{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}</td>
+            <td class="align-middle text-end">
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_artiste', nom=groupe.get_nom_groupe(), id=artiste.get_id()) }}`"">Supprimer</button>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+    <button onclick="window.location.href=`{{ url_for('ajouter_artiste', nom=groupe.get_nom_groupe()) }}`" class="btn btn-success btn-sm">Ajouter artiste</button>
+    <button onclick="window.location.href=`{{ url_for('evenements_groupe', nom=groupe.get_nom_groupe()) }}`" class="btn btn-secondary btn-sm">Voir les évènements</button>
 </div>
 
 {% endblock %}

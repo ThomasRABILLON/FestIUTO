@@ -1,0 +1,9 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container-sm m-5 p-5">
+    <p class="fs-1 text"><a class="link-opacity-10" href="{{ url_for('gestion_groupes') }}">Gestion des groupes</a></p>
+    <p class="fs-1 text"><a class="link-opacity-10" href="{{ url_for('gestion_evenements') }}">Gestion des évènements</a></p>
+    <p class="fs-1 text"><a class="link-opacity-10" href="#">Gestion des hébergements</a></p>
+</div>
+
+{% endblock %}

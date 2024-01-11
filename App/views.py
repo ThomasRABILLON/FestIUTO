@@ -15,7 +15,7 @@ from .models.Instrument import Instrument
 from .models.A_Favori import A_Favori
 
 from .models.LoginManager import load_user
-from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm
+from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm, CreerEvenementForm
 
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -32,6 +32,8 @@ def billet():
 @app.route('/achat_billet/<int:id>', methods=['GET', 'POST'])
 @login_required
 def achat_billet(id):
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     form = AcheterBilletForm()
     if form.validate_on_submit():
         retour = form.acheter_billet(current_user)
@@ -44,6 +46,8 @@ def achat_billet(id):
 @app.route('/mes_billets')
 @login_required
 def mes_billets():
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     return render_template('mes_billets.html', billets = Billet.get_billet_by_spectateur(current_user.get_id()), Type_billet = Type_billet)
 
 
@@ -51,6 +55,8 @@ def mes_billets():
 @app.route("/reservation", methods=['GET', 'POST'])
 @login_required
 def reservation(id=""):
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     form = ReserverEvenementForm()
     if form.validate_on_submit():
         retour = form.reserver_evenement(id, current_user)
@@ -62,6 +68,8 @@ def reservation(id=""):
 @app.route('/mes_reservations')
 @login_required
 def mes_reservations():
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     return render_template('mes_reservations.html', reservations = Est_Inscrit.get_inscription_by_mail(current_user.get_id()), Groupe = Groupe, Evenement = Evenement, Est_Inscrit = Est_Inscrit, Type_evenement = Type_evenement)
 
 @app.route('/groupes')
@@ -71,6 +79,8 @@ def groupes():
 @app.route('/groupe/<int:id>', methods=['GET', 'POST'])
 @login_required
 def groupe(id):
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     form = MettreEnFavorisForm()
     if form.validate_on_submit():
         retour = form.mettre_en_favoris(current_user, id)
@@ -82,31 +92,83 @@ def groupe(id):
 @app.route('/sup_favoris/<int:id>', methods=['GET', 'POST'])
 @login_required
 def sup_favoris(id):
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     A_Favori.delete_favori(current_user.get_id(), id)
     return redirect(url_for('groupe', id = id))
 
 @app.route('/mes_favoris')
+@login_required
 def mes_favoris():
+    if current_user_is_admin():
+        return redirect(url_for('login'))
     return render_template('mes_favoris.html', favoris = A_Favori.get_favori_by_spec(current_user.get_id()), Style_musical = Style_musical, Groupe = Groupe)
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    if request.method == 'POST':
+        mdp = request.form['mdp']
+        if mdp == 'admin':
+            login_user(Spectateur.get_spectateur_by_mail('admin'))
+            return redirect(url_for('panel'))
+    return render_template('admin_login.html')
 
-@app.route('/creer_groupe', methods=['GET', 'POST'])
+@app.route('/admin/panel')
+@login_required
+def panel():
+    if current_user_is_admin():
+        return render_template('panel_admin.html')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/creer_groupe', methods=['GET', 'POST'])
+@login_required
 def creer_groupe():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
     form = CreerGroupeForm()
     if form.validate_on_submit():
         retour = form.create_groupe()
         if retour:
-            return redirect(url_for('groupes'))
+            return redirect(url_for('gestion_groupes'))
         return redirect(url_for('creer_groupe'))
     return render_template('creer_groupe.html', form = form)
 
-@app.route('/gestion_groupe/<string:nom>')
+@app.route('/admin/gestion_groupes')
+@login_required
+def gestion_groupes():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    return render_template('gestion_groupes.html', groupes = Groupe.get_all_groupes(), Style_musical = Style_musical, Artiste = Artiste, Instrument = Instrument)
+
+@app.route('/admin/gestion_groupe/<string:nom>')
+@login_required
 def gestion_groupe(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
     groupe = Groupe.get_groupe_by_nom(nom)
     return render_template('gestion_groupe.html', groupe = groupe, artistes = Artiste.get_artiste_by_groupe(groupe.get_id()), Style_musical = Style_musical, Instrument = Instrument)
 
-@app.route('/gestion_groupe/<string:nom>/ajouter_artiste', methods=['GET', 'POST'])
+@app.route('/admin/gestion_groupe/<string:nom>/supprimer_groupe')
+@login_required
+def supprimer_groupe(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Groupe.delete_groupe(nom)
+    return redirect(url_for('gestion_groupes'))
+
+@app.route('/admin/gestion_groupe/<string:nom>/supprimer_artiste/<int:id>')
+@login_required
+def supprimer_artiste(nom, id):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Artiste.delete_artiste(id)
+    return redirect(url_for('gestion_groupe', nom = nom))
+
+@app.route('/admin/gestion_groupe/<string:nom>/ajouter_artiste', methods=['GET', 'POST'])
+@login_required
 def ajouter_artiste(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
     form = AjouterArtisteForm()
     if form.validate_on_submit():
         print("bizzare")
@@ -114,12 +176,50 @@ def ajouter_artiste(nom):
         return redirect(url_for('gestion_groupe', nom = nom))
     return render_template('ajouter_artiste.html', nom = nom, form = form)
 
-@app.route('/gestion_groupe/<string:nom>/evenements_groupe')
+@app.route('/admin/gestion_groupe/<string:nom>/evenements_groupe')
+@login_required
 def evenements_groupe(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
     groupe = Groupe.get_groupe_by_nom(nom)
     return render_template('evenements_groupe.html', groupe = groupe, events = Evenement.get_evenements_by_groupe(groupe.get_id()), Lieu = Lieu, Type_evenement = Type_evenement, Evenement = Evenement)
-
     
+# @app.route('/admin/gestion_groupe/<string:nom>/evenements_groupe/creer_evenement', methods=['GET', 'POST'])
+# @login_required
+# def creer_evenement(nom):
+#     # TODO
+
+# @app.route('/admin/gestion_groupe/<string:nom>/evenements_groupe/<int:id>/supprimer_evenement')
+# @login_required
+# def supprimer_evenement(nom, id):
+#     # TODO
+
+@app.route('/admin/gestion_evenements')
+@login_required
+def gestion_evenements():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    return render_template('gestion_evenements.html', events = Evenement.get_all_evenements(), Lieu = Lieu, Type_evenement = Type_evenement, Evenement = Evenement, Groupe = Groupe)
+
+@app.route('/admin/gestion_evenements/creer_evenement', methods=['GET', 'POST'])
+@login_required
+def creer_evenement():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    selected_groupe = None
+    journee = 1
+    if request.method == 'POST':
+        # nom = request.form['nom']
+        # description = request.form['description']
+        # type_evenement = request.form['type_evenement']
+        if request.form['groupe'] != -1:
+            selected_groupe = Groupe.get_groupe_by_id(request.form['groupe'])
+        if request.form['journee'] != -1:
+            journee = request.form['journee']
+        # lieu = request.form['lieu']
+        # Evenement.insert_new_evenement(nom, description, type_evenement, groupe, lieu)
+        # return redirect(url_for('gestion_evenements'))
+    return render_template('creer_evenement.html', Groupe = Groupe, selected_groupe = selected_groupe, journee = journee)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -154,3 +254,9 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+
+
+def current_user_is_admin():
+    return current_user.get_id() == 'admin'

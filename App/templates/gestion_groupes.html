@@ -1,0 +1,35 @@
+{% extends 'admin.html' %} {% block main %}
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('panel') }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour au panel d'administration</a>
+</div>
+<div class="container-sm mt-5">
+    <h1 class="text-center">Les groupes</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Nom du groupe</th>
+                <th scope="col" class="text-center">Style du groupe</th>
+                <th scope="col" class="text-center">Nombre de membre</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for groupe in groupes %}
+            <tr>
+                <th scope="row" class="align-middle text-center">{{ groupe.get_id() }}</th>
+                <td class="align-middle text-center">{{ groupe.get_nom_groupe() }}</td>
+                <td class="align-middle text-center">{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</td>
+                <td class="align-middle text-center">{{ Artiste.get_artiste_by_groupe(groupe.get_id())|length }}</td>
+                <td class="align-middle text-end">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href=`{{ url_for('gestion_groupe', nom=groupe.get_nom_groupe()) }}`">Gérer</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_groupe', nom=groupe.get_nom_groupe()) }}`"">Supprimer</button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+    <a href="{{ url_for('creer_groupe') }}" class="btn btn-success btn-sm">Créer un groupe</a>
+</div>
+
+{% endblock %}
