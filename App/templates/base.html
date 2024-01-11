@@ -4,19 +4,23 @@
     {% block head %}
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {% block styles %} {{ bootstrap.load_css() }} {% endblock %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navBar.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/navBar.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/home.css') }}">
     <title>{{ title }}</title>
     {% endblock %}
   </head>
   <body>
     <nav>
       <ul>
-        <li><img src="#" alt="logo"></li>
+        <li><img class="tailleImage" src="../static/images/logo.png" alt="logo"
+            style="filter: invert(0);"></li>
         <li><a href="{{ url_for('home') }}">Accueil</a></li>
         <li><a href="{{ url_for('billet') }}">Billet</a></li>
         <li><a href="{{ url_for('reservation') }}">Reservation</a></li>
@@ -24,7 +28,9 @@
         <li><a href="#">Nous contacter</a></li>
         <li>
           <div class="dropdown">
-            <img src="{{ url_for('static', filename='images/utilisateur.png') }}" alt="utilisateur">
+            <img
+              src="{{ url_for('static', filename='images/utilisateur.png') }}"
+              alt="utilisateur">
             <div class="dropdown-content">
               <a href="{{ url_for('mes_billets') }}">Mes billets</a>
               <a href="{{ url_for('mes_reservations') }}">Mes réservations</a>
@@ -36,7 +42,7 @@
       </ul>
     </nav>
 
-    {% block main %} {% endblock %} 
+    {% block main %} {% endblock %}
     {% block scripts %} {{ bootstrap.load_js()}} {% endblock %}
   </body>
 </html>
