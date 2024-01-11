@@ -1,0 +1,9 @@
+.pair{
+    border-radius:5%;
+    background-color: #202024;
+}
+
+.impair{
+    border-radius:5%;
+    background-color: #0b0909;
+}
