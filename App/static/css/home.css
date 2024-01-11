@@ -17,18 +17,16 @@ main {
   margin: 0 4vw;
   padding: 4em 2em 4em 8em;
   display: flex;
+  justify-content: space-evenly;
 }
 
 h1 {
-  font-size: 6em;
+  font-size: 8em;
 }
 
 .presentation {
   margin-left: 20vw;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .programme {
@@ -104,6 +102,25 @@ h1 {
 .tailleImage {
   width: auto;
   height: 3.5em;
+}
+.img {
+  width: auto;
+  height: 9em;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+}
+
+section.presentation {
+  position: relative;
+}
+
+.button_accueil {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 /*css FESTIUT'O image*/
