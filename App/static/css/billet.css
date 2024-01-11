@@ -53,10 +53,10 @@
 
 button {
   right: 0;
-  background-color: #0099ff;
-  border-color: #0099ff;
+  background-color: #6a8596;
+  border-color: #6a8596;
   margin-bottom: 1em;
-  padding: 0.5vh 0.5vw;
+  padding: 0.5vh 1vw;
 }
 
 p {
@@ -117,19 +117,19 @@ p {
 /*titre pass 1 jour*/
 @keyframes colorRotate3 {
   from {
-    color: #580000;
+    color: #f1b6b6;
   }
   10% {
-    color: #012025;
+    color: #fdfdfd;
   }
   50% {
-    color: #072147;
+    color: #fc9696;
   }
   75% {
-    color: #121736;
+    color: #c4dada;
   }
   100% {
-    color: #1c04f1;
+    color: #dfbfbf;
   }
 }
 
@@ -144,21 +144,12 @@ p {
 .rainbow-5:hover {
   background-image: linear-gradient(
     to right,
-    #e7484f,
-    #e7484f 16.65%,
-    #f68b1d 16.65%,
-    #f68b1d 33.3%,
-    #fced00 33.3%,
-    #fced00 49.95%,
-    #009e4f 49.95%,
-    #009e4f 66.6%,
-    #00aac3 66.6%,
-    #00aac3 83.25%,
-    #732982 83.25%,
-    #732982 100%,
-    #e7484f 100%
+    #6666ff,
+    #0099ff,
+    #00ff00,
+    #ff3399
   );
-  filter: blur(1px); /* Ajustez la valeur de flou selon vos préférences */
+  filter: blur(0.5px); /* Ajustez la valeur de flou selon vos préférences */
   z-index: 0; /* Placez-le derrière le contenu principal */
   animation: slidebg 4s linear infinite;
   border: none;
@@ -168,41 +159,29 @@ p {
   background-image: linear-gradient(
     to right,
     #1f4aff,
-    #1f4aff 16.65%,
-    #4b7bff 16.65%,
-    #4b7bff 33.3%,
-    #8fbfff 33.3%,
-    #8fbfff 49.95%,
-    #0066cc 49.95%,
-    #0066cc 66.6%,
-    #3399ff 66.6%,
-    #3399ff 83.25%,
-    #4d4dff 83.25%,
-    #4d4dff 100%,
-    #1f4aff 100%
+    #1f4aff,
+    #4b7bff,
+    #4b7bff,
+    #8fbfff,
+    #4d4dff,
+    #4d4dff
   );
-
-  animation: slidebg 3s linear infinite;
+  filter: blur(0.5px);
+  animation: slidebg 4s linear infinite;
   border: none;
 }
 .rainbow-3:hover {
   background-image: linear-gradient(
     to right,
     #ff0000,
-    #ff0000 16.65%,
-    #cc0000 16.65%,
-    #990000 33.3%,
-    #ff3333 33.3%,
-    #ff3333 49.95%,
-    #660000 49.95%,
-    #660000 66.6%,
-    #cc3333 66.6%,
-    #cc3333 83.25%,
-    #800000 83.25%,
-    #800000 100%,
-    #ff0000 100%
+    #ff0000,
+    #cc0000,
+    #990000,
+    #ff3333,
+    #ff0000
   );
-  animation: slidebg 3s linear infinite;
+  filter: blur(0.5px);
+  animation: slidebg 4s linear infinite;
   border: none;
 }
 
