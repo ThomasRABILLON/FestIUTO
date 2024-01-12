@@ -171,7 +171,6 @@ def ajouter_artiste(nom):
         return redirect(url_for('admin'))
     form = AjouterArtisteForm()
     if form.validate_on_submit():
-        print("bizzare")
         form.ajouter_artiste(Groupe.get_groupe_by_nom(nom).get_id())
         return redirect(url_for('gestion_groupe', nom = nom))
     return render_template('ajouter_artiste.html', nom = nom, form = form)
@@ -206,20 +205,13 @@ def gestion_evenements():
 def creer_evenement():
     if not current_user_is_admin():
         return redirect(url_for('admin'))
-    selected_groupe = None
-    journee = 1
+    form = CreerEvenementForm()
+    if form.validate_on_submit():
+        print(form.jour_deb.data)
+        redirect(url_for('gestion_evenements'))
     if request.method == 'POST':
-        # nom = request.form['nom']
-        # description = request.form['description']
-        # type_evenement = request.form['type_evenement']
-        if request.form['groupe'] != -1:
-            selected_groupe = Groupe.get_groupe_by_id(request.form['groupe'])
-        if request.form['journee'] != -1:
-            journee = request.form['journee']
-        # lieu = request.form['lieu']
-        # Evenement.insert_new_evenement(nom, description, type_evenement, groupe, lieu)
-        # return redirect(url_for('gestion_evenements'))
-    return render_template('creer_evenement.html', Groupe = Groupe, selected_groupe = selected_groupe, journee = journee)
+        print(request.form['jour_deb'])
+    return render_template('creer_evenement.html', form = form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

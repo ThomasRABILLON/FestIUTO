@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, HiddenField, TextAreaField, DateField, IntegerField, SelectField
+from wtforms import StringField, PasswordField, HiddenField, TextAreaField, DateField, IntegerField, SelectField, TimeField, BooleanField
 from wtforms.validators import DataRequired
 from hashlib import sha256
 
@@ -13,6 +13,8 @@ from .models.Groupe import Groupe
 from .models.Style_musical import Style_musical
 from .models.Artiste import Artiste
 from .models.Instrument import Instrument
+from .models.Type_evenement import Type_evenement
+from .models.Lieu import Lieu
 
 import datetime
 from .app import app
@@ -122,14 +124,27 @@ class AjouterArtisteForm(FlaskForm):
         Artiste.insert_new_artiste(self.nom.data, self.prenom.data, id_g, self.instrument.data)
 
 class CreerEvenementForm(FlaskForm):
-    nom = StringField('Nom', validators=[DataRequired()])
+    jour_deb = SelectField('Jour début', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
+    heure_deb = TimeField('Heure début', validators=[DataRequired()])
+    jour_fin = SelectField('Jour début', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
+    heure_fin = TimeField('Heure début', validators=[DataRequired()])
+    duree = IntegerField('Durée', validators=[DataRequired()])
+    temps_montage = IntegerField('Temps montage', validators=[DataRequired()])
+    temps_demontage = IntegerField('Temps démontage', validators=[DataRequired()])
+    est_public = BooleanField('Public ?')
+    a_preinscription = BooleanField('Pré-inscription ?')
     with app.app_context():
-    #     type_evenement = SelectField('Type', choices=[(i.get_id(), i.get_libelle()) for i in Evenement.get_all_types_evenement()])
-        groupe = SelectField('Groupe', choices=[(i.get_id(), i.get_nom_groupe()) for i in Groupe.get_all_groupes()])
-    #     lieu = SelectField('Lieu', choices=[(i.get_id(), i.get_nom()) for i in Evenement.get_all_lieux()])
+        type_evenements = SelectField('Types', choices=[(i.get_id(), i.get_libelle()) for i in Type_evenement.get_all_type_evenement()])
+        groupes = SelectField('Groupes', choices=[(i.get_id(), i.get_nom_groupe()) for i in Groupe.get_all_groupes()])
+        lieux = SelectField('Lieux', choices=[(i.get_id(), i.get_nom()) for i in Lieu.get_all_lieux()])
 
     def creer_evenement(self) -> None:
         Evenement.insert_new_evenement(self.nom.data, self.description.data, self.type_evenement.data, self.groupe.data, self.lieu.data)
+    
+    def verif_dispo_groupe(self) -> bool:
+        if Evenement.get_evenement_by_groupe_and_date(self.groupe.data, self.jour_deb.data, self.jour_fin.data) is None:
+            return True
+        return False
 
 # class EditProfilForm(FlaskForm):
 #     pseudo = StringField('Pseudo')

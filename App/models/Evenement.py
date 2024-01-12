@@ -19,7 +19,7 @@ class Evenement(db.Model):
     id_lieu = db.Column(db.Integer, db.ForeignKey('LIEU.id_lieu'))
 
     def __init__(self, ref_evenement: str, jour_arrive: int, heure_arrive: int, jour_depart: int, heure_depart: int, duree: int, temps_montage: int, temps_demontage: int, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
-        self.ref_evenement = get_ref_evenement
+        self.ref_evenement = ref_evenement
         self.jour_arrive = jour_arrive
         self.heure_arrive = heure_arrive
         self.jour_depart = jour_depart
