@@ -134,3 +134,31 @@ section.presentation {
   background-size: cover; /* Pour que l'image de fond soit redimensionnée */
   display: inline-block; /* Pour que le conteneur prenne la taille du texte */
 }
+
+/*en dessous du carrousselle*/
+.suiteAccueil {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  margin-top: 7em;
+  margin-bottom: 7em;
+}
+
+.bloc {
+  border-radius: 15px; /* Coins arrondis */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Ombre légère */
+}
+
+.suiteAccueil .bloc {
+  max-width: 400px; /* Ajustez la largeur maximale selon vos besoins */
+}
+
+.suiteAccueil .titrebloc {
+  margin-bottom: 10px;
+}
+
+.suiteAccueil .imgbloc {
+  border-radius: 50%; /* Pour rendre l'image ronde */
+  margin-bottom: 10px;
+}
