@@ -73,7 +73,7 @@ h1 {
     height: 100px;
     position: absolute;
     width: 100px;
-    z-index: 2;
+    z-index: 0;
   }
 
   &::after {
@@ -148,6 +148,9 @@ section.presentation {
 .bloc {
   border-radius: 15px; /* Coins arrondis */
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Ombre légère */
+  width: 32em;
+  height: 32em;
+  text-align: center;
 }
 
 .suiteAccueil .bloc {
@@ -158,7 +161,29 @@ section.presentation {
   margin-bottom: 10px;
 }
 
+.imgbloc {
+  width: 15em;
+  height: auto;
+  margin: auto;
+}
+
+.imgalone {
+  width: 15em;
+  height: auto;
+  margin: auto;
+  border-radius: 40%;
+  margin-top: 2em;
+}
+
 .suiteAccueil .imgbloc {
   border-radius: 50%; /* Pour rendre l'image ronde */
   margin-bottom: 10px;
+}
+
+.texteaccueil {
+  margin-top: 4em;
+}
+
+.textetop {
+  margin-top: 2em;
 }
