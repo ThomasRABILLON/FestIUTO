@@ -19,6 +19,8 @@ from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementF
 
 from flask_login import login_user, current_user, logout_user, login_required
 
+import time
+
 
 @app.route('/')
 @app.route('/home')
@@ -207,11 +209,22 @@ def creer_evenement():
         return redirect(url_for('admin'))
     form = CreerEvenementForm()
     if form.validate_on_submit():
-        print(form.jour_deb.data)
-        redirect(url_for('gestion_evenements'))
-    if request.method == 'POST':
-        print(request.form['jour_deb'])
+        retour = form.creer_evenement()
+        if retour:
+            return redirect(url_for('gestion_evenements'))
     return render_template('creer_evenement.html', form = form)
+
+@app.route('/admin/gestion_evenements/supprimer_evenement/<string:ref>')
+@login_required
+def supprimer_evenement(ref):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Evenement.delete_evenement(ref)
+    return redirect(url_for('gestion_evenements'))
+
+
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

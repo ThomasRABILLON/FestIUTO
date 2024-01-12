@@ -28,8 +28,8 @@
                     <th scope="row" class="align-middle text-center">{{ event.get_id() }}</td>
                     <td class="align-middle text-center"><a href="{{ url_for('gestion_groupe', nom=Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()) }}">{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</a></td>
                     <td class="align-middle text-center">{{ Type_evenement.get_type_evenement_by_id(Evenement.get_evenement_by_id(event.get_ref_evenement()).get_id_type_evenement()).get_libelle() }}</td>
-                    <td class="align-middle text-center">Journée {{ event.get_jour_arrive() }} à {{ event.get_heure_arrive() }}h</td>
-                    <td class="align-middle text-center">Journée {{ event.get_jour_depart() }} à {{ event.get_heure_depart() }}h</td>
+                    <td class="align-middle text-center">Journée {{ event.get_jour_arrive() }} à {{ event.get_heure_arrive().strftime('%Hh%M') }}</td>
+                    <td class="align-middle text-center">Journée {{ event.get_jour_depart() }} à {{ event.get_heure_depart().strftime('%Hh%M') }}</td>
                     <td class="align-middle text-center">{{ event.get_temps_montage() }}h</td>
                     <td class="align-middle text-center">{{ event.get_temps_demontage() }}h</td>
                     <td class="align-middle text-center">{{ event.get_duree() }}h</td>
@@ -37,13 +37,13 @@
                     <td class="align-middle text-center">{% if event.get_est_public() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-center">{% if event.get_a_preinscription() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-end">
-                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`#`"">Supprimer</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_evenement', ref=event.get_id()) }}`"">Supprimer</button>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="#" class="btn btn-success btn-sm ms-2">Créer un évènements</a>
+    <a href="{{ url_for('creer_evenement') }}" class="btn btn-success btn-sm ms-2">Créer un évènements</a>
 </div>
 
 {% endblock %}

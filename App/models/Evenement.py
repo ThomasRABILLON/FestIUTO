@@ -1,14 +1,15 @@
 from ..app import db
 
+import time
 
 class Evenement(db.Model):
     __tablename__ = 'EVENEMENT'
 
     ref_evenement = db.Column(db.Text, primary_key=True)
     jour_arrive = db.Column(db.Integer)
-    heure_arrive = db.Column(db.Integer)
+    heure_arrive = db.Column(db.Time)
     jour_depart = db.Column(db.Integer)
-    heure_depart = db.Column(db.Integer)
+    heure_depart = db.Column(db.Time)
     duree = db.Column(db.Integer)
     temps_montage = db.Column(db.Integer)
     temps_demontage = db.Column(db.Integer)
@@ -18,7 +19,7 @@ class Evenement(db.Model):
     id_type_evenement = db.Column(db.Integer, db.ForeignKey('TYPE_EVENEMENT.id_type_evenement'))
     id_lieu = db.Column(db.Integer, db.ForeignKey('LIEU.id_lieu'))
 
-    def __init__(self, ref_evenement: str, jour_arrive: int, heure_arrive: int, jour_depart: int, heure_depart: int, duree: int, temps_montage: int, temps_demontage: int, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
+    def __init__(self, ref_evenement: str, jour_arrive: int, heure_arrive: time, jour_depart: int, heure_depart: time, duree: int, temps_montage: int, temps_demontage: int, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
         self.ref_evenement = ref_evenement
         self.jour_arrive = jour_arrive
         self.heure_arrive = heure_arrive
@@ -43,13 +44,13 @@ class Evenement(db.Model):
     def get_jour_arrive(self) -> int:
         return self.jour_arrive
 
-    def get_heure_arrive(self) -> int:
+    def get_heure_arrive(self) -> time:
         return self.heure_arrive
 
     def get_jour_depart(self) -> int:
         return self.jour_depart
 
-    def get_heure_depart(self) -> int:
+    def get_heure_depart(self) -> time:
         return self.heure_depart
 
     def get_duree(self) -> int:
@@ -99,3 +100,21 @@ class Evenement(db.Model):
     @staticmethod
     def get_evenements_by_reservable():
         return Evenement.query.filter_by(a_preinscription=True).all()
+    
+    @staticmethod
+    def get_evenement_by_groupe_and_date(id_g: int, jour_arrive: int, heure_arrive: time, jour_depart: int, heure_depart: time):
+        return Evenement.query.filter_by(id_g=id_g, jour_arrive=jour_arrive, heure_arrive=heure_arrive, jour_depart=jour_depart, heure_depart=heure_depart).first()
+    
+    @staticmethod
+    def get_evenement_by_lieu_and_date(id_lieu: int, jour_arrive: int, heure_arrive: time, jour_depart: int, heure_depart: time):
+        return Evenement.query.filter_by(id_lieu=id_lieu, jour_arrive=jour_arrive, heure_arrive=heure_arrive, jour_depart=jour_depart, heure_depart=heure_depart).first()
+    
+    @staticmethod
+    def insert_new_evenement(ref_evenement: str, jour_arrive: int, heure_arrive: time, jour_depart: int, heure_depart: time, duree: int, temps_montage: int, temps_demontage: int, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
+        db.session.add(Evenement(ref_evenement, jour_arrive, heure_arrive, jour_depart, heure_depart, duree, temps_montage, temps_demontage, est_public, a_preinscription, id_g, id_type_evenement, id_lieu))
+        db.session.commit()
+
+    @staticmethod
+    def delete_evenement(ref_evenement: str):
+        Evenement.query.filter_by(ref_evenement=ref_evenement).delete()
+        db.session.commit()

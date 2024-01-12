@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, HiddenField, TextAreaField, DateField, IntegerField, SelectField, TimeField, BooleanField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 from hashlib import sha256
 
 from .models.Spectateur import Spectateur 
@@ -16,7 +16,10 @@ from .models.Instrument import Instrument
 from .models.Type_evenement import Type_evenement
 from .models.Lieu import Lieu
 
-import datetime
+import random
+import string
+import time
+
 from .app import app
 
 
@@ -128,9 +131,9 @@ class CreerEvenementForm(FlaskForm):
     heure_deb = TimeField('Heure début', validators=[DataRequired()])
     jour_fin = SelectField('Jour début', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
     heure_fin = TimeField('Heure début', validators=[DataRequired()])
-    duree = IntegerField('Durée', validators=[DataRequired()])
-    temps_montage = IntegerField('Temps montage', validators=[DataRequired()])
-    temps_demontage = IntegerField('Temps démontage', validators=[DataRequired()])
+    duree = IntegerField('Durée', default=0, validators=[NumberRange(min=0, message="La durée doit être positive")])
+    temps_montage = IntegerField('Temps montage', default=0, validators=[NumberRange(min=0, message="Le temps de montage doit être positif")])
+    temps_demontage = IntegerField('Temps démontage', default=0, validators=[NumberRange(min=0, message="Le temps de démontage doit être positif")])
     est_public = BooleanField('Public ?')
     a_preinscription = BooleanField('Pré-inscription ?')
     with app.app_context():
@@ -139,12 +142,28 @@ class CreerEvenementForm(FlaskForm):
         lieux = SelectField('Lieux', choices=[(i.get_id(), i.get_nom()) for i in Lieu.get_all_lieux()])
 
     def creer_evenement(self) -> None:
-        Evenement.insert_new_evenement(self.nom.data, self.description.data, self.type_evenement.data, self.groupe.data, self.lieu.data)
+        if not self.verif_date() and not self.verif_dispo_groupe() and not self.verif_dispo_lieu():
+            return False
+        ref_envenement = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for i in range(4))
+        Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, self.duree.data, self.temps_montage.data, self.temps_demontage.data, self.est_public.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
+        return True
     
     def verif_dispo_groupe(self) -> bool:
-        if Evenement.get_evenement_by_groupe_and_date(self.groupe.data, self.jour_deb.data, self.jour_fin.data) is None:
+        if Evenement.get_evenement_by_groupe_and_date(self.groupe.data, self.jour_deb.data, self.heure_deb, self.jour_fin.data, self.heure_fin) is None:
             return True
         return False
+    
+    def verif_dispo_lieu(self) -> bool:
+        if Evenement.get_evenement_by_lieu_and_date(self.lieu.data, self.jour_deb.data, self.heure_deb, self.jour_fin.data, self.heure_fin) is None:
+            return True
+        return False
+    
+    def verif_date(self) -> bool:
+        if self.jour_deb.data > self.jour_fin.data:
+            return False
+        if self.jour_deb.data == self.jour_fin.data and self.heure_deb.data > self.heure_fin.data:
+            return False
+        return True
 
 # class EditProfilForm(FlaskForm):
 #     pseudo = StringField('Pseudo')
