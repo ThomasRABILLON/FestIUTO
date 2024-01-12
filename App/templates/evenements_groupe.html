@@ -26,8 +26,8 @@
                 <tr>
                     <th scope="row" class="align-middle text-center">{{ event.get_id() }}</td>
                     <td class="align-middle text-center">{{ Type_evenement.get_type_evenement_by_id(Evenement.get_evenement_by_id(event.get_ref_evenement()).get_id_type_evenement()).get_libelle() }}</td>
-                    <td class="align-middle text-center">Journée {{ event.get_jour_arrive() }} à {{ event.get_heure_arrive().strftime('%Hh%M') }}</td>
-                    <td class="align-middle text-center">Journée {{ event.get_jour_depart() }} à {{ event.get_heure_depart().strftime('%Hh%M') }}</td>
+                    <td class="align-middle text-center">Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb().strftime('%Hh%M') }}</td>
+                    <td class="align-middle text-center">Journée {{ event.get_jour_fin() }} à {{ event.get_heure_fin().strftime('%Hh%M') }}</td>
                     <td class="align-middle text-center">{{ event.get_temps_montage() }}h</td>
                     <td class="align-middle text-center">{{ event.get_temps_demontage() }}h</td>
                     <td class="align-middle text-center">{{ event.get_duree() }}h</td>

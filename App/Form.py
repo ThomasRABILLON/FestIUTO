@@ -129,8 +129,8 @@ class AjouterArtisteForm(FlaskForm):
 class CreerEvenementForm(FlaskForm):
     jour_deb = SelectField('Jour début', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
     heure_deb = TimeField('Heure début', validators=[DataRequired()])
-    jour_fin = SelectField('Jour début', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
-    heure_fin = TimeField('Heure début', validators=[DataRequired()])
+    jour_fin = SelectField('Jour fin', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
+    heure_fin = TimeField('Heure fin', validators=[DataRequired()])
     duree = IntegerField('Durée', default=0, validators=[NumberRange(min=0, message="La durée doit être positive")])
     temps_montage = IntegerField('Temps montage', default=0, validators=[NumberRange(min=0, message="Le temps de montage doit être positif")])
     temps_demontage = IntegerField('Temps démontage', default=0, validators=[NumberRange(min=0, message="Le temps de démontage doit être positif")])
@@ -142,26 +142,44 @@ class CreerEvenementForm(FlaskForm):
         lieux = SelectField('Lieux', choices=[(i.get_id(), i.get_nom()) for i in Lieu.get_all_lieux()])
 
     def creer_evenement(self) -> None:
-        if not self.verif_date() and not self.verif_dispo_groupe() and not self.verif_dispo_lieu():
+        if not self.verif_date() and not self.verif_dispo_groupe() and not self.verif_dispo_lieu() and not self.verif_duree():
             return False
-        ref_envenement = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for i in range(4))
+        ref_envenement = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(4))
         Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, self.duree.data, self.temps_montage.data, self.temps_demontage.data, self.est_public.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
         return True
     
     def verif_dispo_groupe(self) -> bool:
-        if Evenement.get_evenement_by_groupe_and_date(self.groupe.data, self.jour_deb.data, self.heure_deb, self.jour_fin.data, self.heure_fin) is None:
+        if Evenement.get_evenements_by_groupe(self.groupes.data) is None:
             return True
-        return False
+        for evenement in Evenement.get_evenements_by_groupe(self.groupes.data):
+            if evenement.get_jour_deb() == self.jour_deb.data and evenement.get_jour_fin() == self.jour_fin.data:
+                if (evenement.get_heure_deb() >= self.heure_deb.data <= evenement.get_heure_fin()) or (evenement.get_heure_deb() >= self.heure_fin.data <= evenement.get_heure_fin()) or (self.heure_deb.data <= evenement.get_heure_deb() and self.heure_fin.data >= evenement.get_heure_fin()) or (self.heure_deb.data >= evenement.get_heure_deb() and self.heure_fin.data <= evenement.get_heure_fin()) or (self.heure_deb.data == evenement.get_heure_deb() and self.heure_fin.data == evenement.get_heure_fin()):
+                    return False
+        return True
     
     def verif_dispo_lieu(self) -> bool:
-        if Evenement.get_evenement_by_lieu_and_date(self.lieu.data, self.jour_deb.data, self.heure_deb, self.jour_fin.data, self.heure_fin) is None:
+        if Evenement.get_evenements_by_lieu(self.lieux.data) is None:
             return True
-        return False
+        for evenement in Evenement.get_evenements_by_lieu(self.lieux.data):
+            if evenement.get_jour_deb() == self.jour_deb.data and evenement.get_jour_fin() == self.jour_fin.data:
+                if (evenement.get_heure_deb() - evenement.get_temps_montage() >= self.heure_deb.data - self.temps_montage.data <= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (evenement.get_heure_deb() - evenement.get_temps_montage() >= self.heure_fin.data + self.temps_demontage.data <= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (self.heure_deb.data - self.temps_montage.data <= evenement.get_heure_deb() - evenement.get_temps_montage() and self.heure_fin.data + self.temps_demontage.data >= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (self.heure_deb.data - self.temps_montage.data >= evenement.get_heure_deb() - evenement.get_temps_montage() and self.heure_fin.data + self.temps_demontage.data <= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (self.heure_deb.data - self.temps_montage.data == evenement.get_heure_deb() - evenement.get_temps_montage() and self.heure_fin.data + self.temps_demontage.data == evenement.get_heure_fin() + evenement.get_temps_demontage()):
+                    return False
+        return True
+    
+    def verif_heure(self) -> bool:
+        if self.heure_deb.data >= self.heure_fin.data:
+            return False
+        return True
     
     def verif_date(self) -> bool:
         if self.jour_deb.data > self.jour_fin.data:
             return False
         if self.jour_deb.data == self.jour_fin.data and self.heure_deb.data > self.heure_fin.data:
+            return False
+        return True
+    
+    def verif_duree(self) -> bool:
+        if self.duree.data <= time('00:00:00'):
             return False
         return True
 
