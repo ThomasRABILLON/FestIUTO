@@ -19,6 +19,7 @@ from .models.Lieu import Lieu
 import random
 import string
 import time
+import datetime
 
 from .app import app
 
@@ -145,7 +146,7 @@ class CreerEvenementForm(FlaskForm):
         if not self.verif_date() and not self.verif_dispo_groupe() and not self.verif_dispo_lieu() and not self.verif_duree():
             return False
         ref_envenement = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(4))
-        Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, self.duree.data, self.temps_montage.data, self.temps_demontage.data, self.est_public.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
+        Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, datetime.time(self.duree.data, 0, 0), datetime.time(self.temps_montage.data, 0, 0), datetime.time(self.temps_demontage.data, 0, 0), self.est_public.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
         return True
     
     def verif_dispo_groupe(self) -> bool:

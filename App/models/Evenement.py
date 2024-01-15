@@ -106,7 +106,7 @@ class Evenement(db.Model):
         return Evenement.query.filter_by(a_preinscription=True).all()
     
     @staticmethod
-    def insert_new_evenement(ref_evenement: str, jour_deb: int, heure_deb: time, jour_fin: int, heure_fin: time, duree: int, temps_montage: int, temps_demontage: int, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
+    def insert_new_evenement(ref_evenement: str, jour_deb: int, heure_deb: time, jour_fin: int, heure_fin: time, duree: time, temps_montage: time, temps_demontage: time, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
         db.session.add(Evenement(ref_evenement, jour_deb, heure_deb, jour_fin, heure_fin, duree, temps_montage, temps_demontage, est_public, a_preinscription, id_g, id_type_evenement, id_lieu))
         db.session.commit()
 

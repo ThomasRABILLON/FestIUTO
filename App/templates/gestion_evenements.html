@@ -30,9 +30,9 @@
                     <td class="align-middle text-center">{{ Type_evenement.get_type_evenement_by_id(Evenement.get_evenement_by_id(event.get_ref_evenement()).get_id_type_evenement()).get_libelle() }}</td>
                     <td class="align-middle text-center">Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb().strftime('%Hh%M') }}</td>
                     <td class="align-middle text-center">Journée {{ event.get_jour_fin() }} à {{ event.get_heure_fin().strftime('%Hh%M') }}</td>
-                    <td class="align-middle text-center">{{ event.get_temps_montage() }}h</td>
-                    <td class="align-middle text-center">{{ event.get_temps_demontage() }}h</td>
-                    <td class="align-middle text-center">{{ event.get_duree() }}h</td>
+                    <td class="align-middle text-center">{{ event.get_temps_montage().strftime('%Hh%M') }}</td>
+                    <td class="align-middle text-center">{{ event.get_temps_demontage().strftime('%Hh%M') }}</td>
+                    <td class="align-middle text-center">{{ event.get_duree().strftime('%Hh%M') }}</td>
                     <td class="align-middle text-center">{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}/{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</td>
                     <td class="align-middle text-center">{% if event.get_est_public() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-center">{% if event.get_a_preinscription() == 1 %}Oui{% else %}Non{% endif %}</td>
