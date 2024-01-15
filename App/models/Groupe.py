@@ -1,5 +1,7 @@
 from ..app import db
 
+from .Artiste import Artiste
+
 class Groupe(db.Model):
     __tablename__ = 'GROUPE'
 
@@ -41,6 +43,10 @@ class Groupe(db.Model):
     @staticmethod
     def get_groupe_by_style(id_style: int):
         return Groupe.query.filter_by(id_style=id_style).all()
+
+    @staticmethod
+    def get_nombre_artiste(id_g: int) -> int:
+        return len(Artiste.get_artiste_by_groupe(id_g))
 
     @staticmethod
     def insert_new_groupe(nom_groupe: str, description: str, id_style: int) -> None:

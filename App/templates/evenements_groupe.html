@@ -35,7 +35,7 @@
                     <td class="align-middle text-center">{% if event.get_est_public() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-center">{% if event.get_a_preinscription() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-end">
-                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_evenement', ref=event.get_id()) }}`"">Supprimer</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_evenement_groupe', nom=groupe.get_nom_groupe(), ref=event.get_id()) }}`"">Supprimer</button>
                     </td>
                 </tr>
             {% endfor %}

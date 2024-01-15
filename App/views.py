@@ -13,9 +13,11 @@ from .models.Style_musical import Style_musical
 from .models.Artiste import Artiste
 from .models.Instrument import Instrument
 from .models.A_Favori import A_Favori
+from .models.Hebergement import Hebergement
+from .models.Est_Heberger import Est_Heberger
 
 from .models.LoginManager import load_user
-from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm, CreerEvenementForm
+from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm, CreerEvenementForm, CreerHebergementForm
 
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -190,10 +192,43 @@ def evenements_groupe(nom):
 # def creer_evenement(nom):
 #     # TODO
 
-# @app.route('/admin/gestion_groupe/<string:nom>/evenements_groupe/<int:id>/supprimer_evenement')
-# @login_required
-# def supprimer_evenement(nom, id):
-#     # TODO
+@app.route('/admin/gestion_groupe/<string:nom>/evenements_groupe/<string:ref>/supprimer_evenement_groupe')
+@login_required
+def supprimer_evenement_groupe(nom, ref):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Evenement.delete_evenement(ref)
+    return redirect(url_for('evenements_groupe', nom = nom))
+
+@app.route('/admin/gestion_groupe/<string:nom>/hebergements_groupe')
+@login_required
+def hebergements_groupe(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    groupe = Groupe.get_groupe_by_nom(nom)
+    return render_template('hebergements_groupe.html', groupe = groupe, Hebergement = Hebergement, hebergements = Est_Heberger.get_est_heberger_by_groupe(groupe.get_id()))
+
+@app.route('/admin/gestion_groupe/<string:nom>/hebergements_groupe/ajouter_hebergement', methods=['GET', 'POST'])
+@login_required
+def ajouter_hebergement_groupe(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    groupe = Groupe.get_groupe_by_nom(nom)
+    if request.method == 'GET':
+        if request.args.get('date_debut') is not None and request.args.get('date_fin') is not None and request.args.get('date_debut') != "" and request.args.get('date_fin') != "" and request.args.get('date_debut') <= request.args.get('date_fin'):
+            if request.args.get('id_hebergement') is not None and request.args.get('id_hebergement') != "" and int(request.args.get('id_hebergement')) != -1:
+                Est_Heberger.insert_est_heberger(groupe.get_id(), int(request.args.get('id_hebergement')), int(request.args.get('date_debut')), int(request.args.get('date_fin')))
+                return redirect(url_for('hebergements_groupe', nom = nom))
+            return render_template('ajouter_hebergement_groupe.html', groupe = groupe, date_debut = int(request.args.get('date_debut')), date_fin = int(request.args.get('date_fin')), hebergements = Est_Heberger.get_all_hebergements_disponibles(groupe, int(request.args.get('date_debut')), int(request.args.get('date_fin')), Groupe.get_nombre_artiste(groupe.get_id())))
+    return render_template('ajouter_hebergement_groupe.html', groupe = groupe, date_debut = None, date_fin = None, hebergements = None)
+
+@app.route('/admin/gestion_groupe/<string:nom>/hebergements_groupe/<int:id>/supprimer_hebergement_groupe')
+@login_required
+def supprimer_hebergement_groupe(nom, id):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Est_Heberger.delete_est_heberger(Groupe.get_groupe_by_nom(nom).get_id(), id)
+    return redirect(url_for('hebergements_groupe', nom = nom))
 
 @app.route('/admin/gestion_evenements')
 @login_required
@@ -221,6 +256,33 @@ def supprimer_evenement(ref):
         return redirect(url_for('admin'))
     Evenement.delete_evenement(ref)
     return redirect(url_for('gestion_evenements'))
+
+
+@app.route('/admin/gestion_hebergements')
+@login_required
+def gestion_hebergements():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    return render_template('gestion_hebergements.html', hebergements = Hebergement.get_all_hebergements())
+
+@app.route('/admin/gestion_hebergements/creer_hebergement', methods=['GET', 'POST'])
+@login_required
+def creer_hebergement():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    form = CreerHebergementForm()
+    if form.validate_on_submit():
+        form.creer_hebergement()
+        return redirect(url_for('gestion_hebergements'))
+    return render_template('creer_hebergement.html', form = form)
+
+@app.route('/admin/gestion_hebergements/supprimer_hebergement/<int:id>')
+@login_required
+def supprimer_hebergement(id):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Hebergement.delete_hebergement(id)
+    return redirect(url_for('gestion_hebergements'))
 
 
 

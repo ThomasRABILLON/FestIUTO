@@ -15,6 +15,7 @@ from .models.Artiste import Artiste
 from .models.Instrument import Instrument
 from .models.Type_evenement import Type_evenement
 from .models.Lieu import Lieu
+from .models.Hebergement import Hebergement
 
 import random
 import string
@@ -184,45 +185,9 @@ class CreerEvenementForm(FlaskForm):
             return False
         return True
 
-# class EditProfilForm(FlaskForm):
-#     pseudo = StringField('Pseudo')
-#     nom = StringField('Nom')
-#     prenom = StringField('Prenom')
-#     password = PasswordField('Password')
+class CreerHebergementForm(FlaskForm):
+    nom_hebergement = StringField('Nom', validators=[DataRequired()])
+    nb_place_jour = IntegerField('Nombre de place par jour', default=1, validators=[NumberRange(min=1, message="Il ne peux pas y avoir moins d'une place par jour")])
 
-#     def edit_profil(self, user: User) -> None:
-#         # update user
-#         if self.pseudo.data != "":
-#             user.pseudo = self.pseudo.data
-#         if self.nom.data != "":
-#             user.nom = self.nom.data
-#         if self.prenom.data != "":
-#             user.prenom = self.prenom.data
-#         if self.password.data != "":
-#             m = sha256()
-#             m.update(self.password.data.encode())
-#             passwd = m.hexdigest()
-#             user.password = passwd
-#         UserDB.update_user(user)
-
-# class PostForm(FlaskForm):
-#     titre = StringField('Titre', validators=[DataRequired()])
-#     contenu = TextAreaField('Contenu', validators=[DataRequired()])
-
-#     def create_post(self, user: User) -> None:
-#         id = PostDB.get_max_id()
-#         if id is None:
-#             id = -1
-#         PostDB.insert_new_post(id+1, self.titre.data, self.contenu.data, datetime.datetime.now(), user)
-
-# class CommentaireForm(FlaskForm):
-#     texte = TextAreaField('Contenu', validators=[DataRequired()])
-
-#     def create_commentaire(self, user: User, post: int) -> None:
-#         CommentaireDB.insert_new_commentaire(user.get_email(), post, self.texte.data)
-# class SearchForm(FlaskForm):
-#     titre = StringField('Titre', validators=[DataRequired()])
-
-#     def search_post_by_titre(self) -> list:
-#         return PostDB.search_all_posts_by_titre(self.titre.data)
-      
+    def creer_hebergement(self) -> None:
+        Hebergement.insert_hebergement(self.nom_hebergement.data, self.nb_place_jour.data)

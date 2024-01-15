@@ -38,6 +38,7 @@
     {% endif %}
     <button onclick="window.location.href=`{{ url_for('ajouter_artiste', nom=groupe.get_nom_groupe()) }}`" class="btn btn-success btn-sm">Ajouter artiste</button>
     <button onclick="window.location.href=`{{ url_for('evenements_groupe', nom=groupe.get_nom_groupe()) }}`" class="btn btn-secondary btn-sm">Voir les évènements</button>
+    <button onclick="window.location.href=`{{ url_for('hebergements_groupe', nom=groupe.get_nom_groupe()) }}`" class="btn btn-secondary btn-sm">Gérer l'hébergement</button>
 </div>
 
 {% endblock %}

@@ -136,30 +136,30 @@ INSERT INTO TYPE_BILLET (id_type_billet, libelle, duree, prix) VALUES(3, 'totali
 -- BILLET
 
 -- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(1, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 'joe@gmail.com', 1);
--- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(2, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-03 14:00:00', '%Y-%m-%d %H:%i:%s'), 'john@gmail.com', 2);
+-- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(2, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), 3, 'john@gmail.com', 2);
 -- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(3, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), NULL, 3, 3);
 -- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(4, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 'jeff@gmail.com', 1);
--- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(5, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-03 14:00:00', '%Y-%m-%d %H:%i:%s'), 'elon@gmail.com', 2);
+-- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(5, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), 3, 'elon@gmail.com', 2);
 -- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(7, date('2023-01-03 14:00:01', '%Y-%m-%d %H:%i:%s'), date('2023-01-04 14:00:00', '%Y-%m-%d %H:%i:%s'), 'john@gmail.com', 1);
 
 -- HEBERGEMENT
-INSERT INTO HEBERGEMENT (id_hebergement, nb_place_jour) VALUES(1, 20);
-INSERT INTO HEBERGEMENT (id_hebergement, nb_place_jour) VALUES(2, 30);
-INSERT INTO HEBERGEMENT (id_hebergement, nb_place_jour) VALUES(3, 10);
-INSERT INTO HEBERGEMENT (id_hebergement, nb_place_jour) VALUES(4, 5);
-INSERT INTO HEBERGEMENT (id_hebergement, nb_place_jour) VALUES(5, 2);
+INSERT INTO HEBERGEMENT (id_hebergement, nom_hebergement, nb_place_jour) VALUES(1, 'Hotel rouge', 20);
+INSERT INTO HEBERGEMENT (id_hebergement, nom_hebergement, nb_place_jour) VALUES(2, 'Hotel bleu', 30);
+INSERT INTO HEBERGEMENT (id_hebergement, nom_hebergement, nb_place_jour) VALUES(3, 'Hotel azur', 10);
+INSERT INTO HEBERGEMENT (id_hebergement, nom_hebergement, nb_place_jour) VALUES(4, 'Hotel or', 5);
+INSERT INTO HEBERGEMENT (id_hebergement, nom_hebergement, nb_place_jour) VALUES(5, 'Gite de platine', 2);
 
 -- EST_HEBERGER
-INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(1, 1, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 1);
-INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(2, 2, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-03 14:00:00', '%Y-%m-%d %H:%i:%s'), 2);
-INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(3, 3, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-04 14:00:00', '%Y-%m-%d %H:%i:%s'), 3);
-INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(4, 4, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-03 14:00:00', '%Y-%m-%d %H:%i:%s'), 2);
-INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(5, 5, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 1);
-INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(6, 5, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 1);
+INSERT INTO EST_HEBERGER (id, id_g, id_hebergement, date_debut, date_fin) VALUES(1, 1, 1, 1, 2);
+INSERT INTO EST_HEBERGER (id, id_g, id_hebergement, date_debut, date_fin) VALUES(2, 2, 2, 1, 3);
+INSERT INTO EST_HEBERGER (id, id_g, id_hebergement, date_debut, date_fin) VALUES(3, 3, 3, 1, 3);
+INSERT INTO EST_HEBERGER (id, id_g, id_hebergement, date_debut, date_fin) VALUES(4, 4, 4, 1, 3);
+INSERT INTO EST_HEBERGER (id, id_g, id_hebergement, date_debut, date_fin) VALUES(5, 5, 5, 1, 2);
+INSERT INTO EST_HEBERGER (id, id_g, id_hebergement, date_debut, date_fin) VALUES(6, 6, 5, 1, 2);
 
 -- Insertion de données pour les triggers
 -- INSERT INTO EST_HEBERGER (id_g, id_hebergement, date_debut, date_fin, duree) VALUES(7, 5, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 1);
--- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(10, date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), date('2023-01-03 14:00:00', '%Y-%m-%d %H:%i:%s'), 5, 1);
+-- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(10, date('2023-01-02 14:00:00', '%Y-%m-%d %H:%i:%s'), 3, 5, 1);
 -- INSERT INTO BILLET (id_billet, debut_validite, fin_validite, mail, id_type_billet) VALUES(9, date('2023-01-01 14:00:00', '%Y-%m-%d %H:%i:%s'), NULL, 4, 3);
 -- INSERT INTO EST_INSCRIT (mail, ref_evenement) VALUES(1, 'ref1');
 -- INSERT INTO EST_INSCRIT (mail, ref_evenement) VALUES(2, 'ref4');
