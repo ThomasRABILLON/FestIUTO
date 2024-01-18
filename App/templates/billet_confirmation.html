@@ -1,20 +1,22 @@
 {% extends 'base.html' %} {% block main %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-<h2>Billet pour {{ billet.get_libelle() }}</h2>
+<div class="container-sm mt-5 mb-5">
+<h2 class="text-left text-light mb-5">Billet pour {{ billet.get_libelle() }}</h2>
 <form action="{{ url_for('achat_billet', id=id) }}" method="post">
     {{ form.csrf_token }}
     {{ form.hidden_tag() }}
+    <div class="input-group mb-3">
+    {{ form.date_debut.label(class="input-group-text") }}
     {% if id==1 %}
-        {{ form.date_debut(id="date", min="1", max="3", value="1") }}
+        {{ form.date_debut(id="date", min="1", max="3", value="1", class="form-control") }}
     {% elif id==2 %}
-        {{ form.date_debut(id="date", min="1", max="2", value="1") }}
+        {{ form.date_debut(id="date", min="1", max="2", value="1", class="form-control") }}
     {% else %}
-        {{ form.date_debut(id="date", min="1", max="1", value="1") }}
+        {{ form.date_debut(id="date", min="1", max="1", value="1", class="form-control") }}
     {% endif %}
-    <label for="date">{{ form.date_debut.label }}</label>
-    <input type="submit" value="Acheter">
+    </div>
+    <input type="submit" value="Acheter" class="btn btn-success">
 </form>
+</div>
 
 {% endblock %}
