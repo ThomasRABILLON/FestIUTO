@@ -1,0 +1,55 @@
+/* Style the main container */
+main {
+  width: 80%;
+  margin: 20px auto;
+  padding: 2em;
+  padding-bottom: 20em;
+}
+
+/* Style each reservation block */
+.reserv {
+  width: 23%; /* Réduire la largeur pour laisser de l'espace entre les événements */
+  margin-right: 2%; /* Ajouter de la marge à droite pour l'espace entre les événements */
+  float: left; /* Utiliser float pour créer une disposition en ligne */
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Clear the float to prevent layout issues */
+.reserv:nth-child(4n) {
+  margin-right: 0; /* Réinitialiser la marge pour chaque 4ème élément */
+  clear: right; /* Assurer la clarté après chaque 4ème élément */
+}
+
+/* Style the heading within each reservation block */
+.reserv h3 {
+  color: #ffffff;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+/* Style the paragraphs within each reservation block */
+.reserv p {
+  color: white;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+/* Style the form button */
+.reserv form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+/* Add some spacing around the form button */
+.reserv form {
+  margin-top: 15px;
+}
