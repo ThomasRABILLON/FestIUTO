@@ -21,7 +21,7 @@ main {
 /* Clear the float to prevent layout issues */
 .reserv:nth-child(4n) {
   margin-right: 0; /* Réinitialiser la marge pour chaque 4ème élément */
-  clear: right; /* Assurer la clarté après chaque 4ème élément */
+  clear: both; /* Assurer la clarté après chaque 4ème élément */
 }
 
 /* Style the heading within each reservation block */
