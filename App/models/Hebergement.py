@@ -1,5 +1,6 @@
 from ..app import db
 
+
 class Hebergement(db.Model):
     __tablename__ = 'HEBERGEMENT'
 
@@ -35,6 +36,8 @@ class Hebergement(db.Model):
         db.session.commit()
 
     @staticmethod
-    def delete_hebergement(id_hebergement: int):
+    def delete_hebergement(id_hebergement: int, Est_Heberger):
+        for est_heberger in Est_Heberger.get_est_heberger_by_hebergement(id_hebergement):
+            db.session.delete(est_heberger)
         db.session.delete(Hebergement.get_hebergement_by_id(id_hebergement))
         db.session.commit()

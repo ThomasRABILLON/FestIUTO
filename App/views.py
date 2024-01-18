@@ -190,7 +190,7 @@ def gestion_groupe(nom):
 def supprimer_groupe(nom):
     if not current_user_is_admin():
         return redirect(url_for('admin'))
-    Groupe.delete_groupe(nom)
+    Groupe.delete_groupe(nom, Est_Heberger)
     return redirect(url_for('gestion_groupes'))
 
 @app.route('/admin/gestion_groupe/<string:nom>/ajouter_lien', methods=['GET', 'POST'])
@@ -332,7 +332,7 @@ def creer_hebergement():
 def supprimer_hebergement(id):
     if not current_user_is_admin():
         return redirect(url_for('admin'))
-    Hebergement.delete_hebergement(id)
+    Hebergement.delete_hebergement(id, Est_Heberger)
     return redirect(url_for('gestion_hebergements'))
 
 

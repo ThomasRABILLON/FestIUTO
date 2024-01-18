@@ -36,3 +36,8 @@ class Est_Inscrit(db.Model):
     @staticmethod
     def get_inscription_by_spectateur_and_evenement(mail: str, ref_evenement: str):
         return Est_Inscrit.query.filter_by(mail=mail, ref_evenement=ref_evenement).first()
+
+    @staticmethod
+    def delete_inscription(mail: str, ref: str) -> None:
+        Est_Inscrit.query.filter_by(mail=mail, ref_evenement=ref).delete()
+        db.session.commit()

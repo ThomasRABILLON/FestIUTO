@@ -23,8 +23,8 @@
                 <td class="align-middle text-center">{{ Artiste.get_artiste_by_groupe(groupe.get_id())|length }}</td>
                 <td class="align-middle text-end">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href=`{{ url_for('gestion_groupe', nom=groupe.get_nom_groupe()) }}`">Gérer</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_groupe', nom=groupe.get_nom_groupe()) }}`"">Supprimer</button>
+                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('gestion_groupe', nom=groupe.get_nom_groupe()) }}">Gérer</a>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ url_for('supprimer_groupe', nom=groupe.get_nom_groupe()) }}">Supprimer</a>
                     </div>
                 </td>
             </tr>

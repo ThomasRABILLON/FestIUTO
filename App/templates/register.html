@@ -7,26 +7,26 @@ class="container-sm mt-5 mb-5 p-5 rounded-3 shadow-lg"
       <form method="post" action="/register">
         {{ form.csrf_token }}
         <div class="form-floating mb-4">
-          {{ form.email(size=20, type="email", class="form-control bg-dark",
+          {{ form.email(size=20, type="email", class="form-control bg-dark text-light",
           id="floatingInput", placeholder="name@example.com" ) }}
           <label for="floatingInput">Adresse mail</label>
         </div>
         <div class="row mb-3">
           <div class="col">
-            {{ form.prenom(size=20, type="text", class="form-control bg-dark",
+            {{ form.prenom(size=20, type="text", class="form-control bg-dark text-light",
             placeholder="Prénom") }}
           </div>
           <div class="col">
-            {{ form.nom(size=20, type="text", class="form-control bg-dark",
+            {{ form.nom(size=20, type="text", class="form-control bg-dark text-light",
             placeholder="Nom") }}
           </div>
         </div>
         <div class="form-floating mb-4">
-          {{ form.date_naissance(class="form-control bg-dark") }}
+          {{ form.date_naissance(class="form-control bg-dark text-light") }}
           {{ form.date_naissance.label(class="text-light") }}
         </div>
         <div class="form-floating mb-4">
-          {{ form.mdp(size=20, type="password", class="form-control bg-dark",
+          {{ form.mdp(size=20, type="password", class="form-control bg-dark text-light",
           id="floatingPassword", placeholder="Mot de passe" ) }}
           <label for="floatingPassword">{{ form.mdp.label }}</label>
         </div>
