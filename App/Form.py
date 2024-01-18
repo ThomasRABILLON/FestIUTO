@@ -184,3 +184,10 @@ class CreerHebergementForm(FlaskForm):
 
     def creer_hebergement(self) -> None:
         Hebergement.insert_hebergement(self.nom_hebergement.data, self.nb_place_jour.data)
+
+class CreerLieuForm(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    emplacement = StringField('Emplacement', validators=[DataRequired()])
+
+    def creer_lieu(self) -> None:
+        Lieu.insert_new_lieu(self.nom.data, self.emplacement.data)
