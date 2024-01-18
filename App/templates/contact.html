@@ -1,26 +1,33 @@
 {% extends 'base.html' %} {% block main %}
 
-<h1>Qui sommes-nous ?</h1>
+<h1 class="center">Qui sommes-nous ?</h1>
 
 <link rel="stylesheet"
     href="{{ url_for('static', filename='css/home.css') }}">
 <main>
 
-    <div>
+    <div class="gros">
         <p class="textcont">Bienvenue chez nous, une équipe passionnée dédiée à
             créer des expériences exceptionnelles lors de festivals et de
             concerts musicaux. Nous sommes bien plus qu'une équipe d'organisateurs
             d'événements ; nous sommes des facilitateurs de souvenirs
             inoubliables, des architectes de moments magiques et des gardiens de
             votre sécurité et de votre bonheur.</p>
+        <h3>Notre Mission :</h3>
         <p class="textcont">
-            Notre Mission :
             Nous croyons fermement que la musique a le pouvoir de rassembler les
             gens, de transcender les frontières et de créer des liens durables.
             Notre mission est de vous offrir des festivals et des concerts
             mémorables, où la musique vous transporte et où chaque instant
             devient une partie intégrante de votre histoire.
-
+        </p>
+        <h3>À Votre Écoute :</h3>
+        <p class="textcont">
+            Notre équipe est constamment à votre écoute. Nous comprenons que
+            chaque personne a des préférences uniques et des besoins
+            spécifiques. C'est pourquoi nous sommes disponibles pour répondre à
+            vos questions, écouter vos suggestions et vous aider à personnaliser
+            votre expérience.
         </p>
     </div>
 
