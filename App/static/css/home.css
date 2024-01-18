@@ -96,6 +96,7 @@ h1 {
   .slide {
     height: auto;
     width: 500px;
+    margin: 1em 10px 0em 10px;
   }
 }
 
