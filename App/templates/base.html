@@ -6,6 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {% block styles %} {{ bootstrap.load_css() }} {% endblock %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +15,8 @@
       href="{{ url_for('static', filename='css/navBar.css') }}">
     <link rel="stylesheet"
       href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css') }}">
     <title>{{ title }}</title>
     {% endblock %}
   </head>
@@ -45,6 +49,24 @@
     </nav>
 
     {% block main %} {% endblock %}
+    <footer>
+      <div class="footer-container">
+        <div class="footer-section">
+          <img src="../static/images/x.png" alt="Image 1">
+          <img src="../static/images/insta.png" alt=" Image 2">
+        </div>
+        <div class="footer-section">
+          <a href="#" class="about-us">À propos de nous</a>
+        </div>
+        <div class="footer-section">
+          <a href="#" class="about-us">FestIUT@fr.com</a>
+        </div>
+        <div class="footer-section">
+          <img src="#" alt="Image 4">
+        </div>
+      </div>
+    </footer>
+
     {% block scripts %} {{ bootstrap.load_js()}} {% endblock %}
   </body>
 </html>

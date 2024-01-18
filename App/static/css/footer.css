@@ -1,0 +1,43 @@
+footer {
+  background-color: #333;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-section {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-section img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.about-us {
+  color: #66c0f4;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-section:last-child {
+  text-align: right;
+}
+
+.footer-section:last-child img {
+  width: 80px;
+  height: 80px;
+}
