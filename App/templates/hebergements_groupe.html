@@ -1,0 +1,35 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('gestion_groupe', nom=groupe.get_nom_groupe()) }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour au groupe</a>
+</div>
+
+<div class="mt-5">
+    <h1 class="text-center">Les hébergements de {{ groupe.get_nom_groupe() }}</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Nom de l'hébergement</th>
+                <th scope="col" class="text-center">Début de l'hébergement</th>
+                <th scope="col" class="text-center">Fin de l'hébergement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hebergement in hebergements %}
+                <tr>
+                    <th scope="row" class="align-middle text-center">{{ hebergement.get_id() }}</td>
+                    <td class="align-middle text-center">{{ Hebergement.get_hebergement_by_id(hebergement.get_id_hebergement()).get_nom_hebergement() }}</td>
+                    <td class="align-middle text-center">Journée {{ hebergement.get_date_debut() }}</td>
+                    <td class="align-middle text-center">Journée {{ hebergement.get_date_fin() }}</td>
+                    <td class="align-middle text-end">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_hebergement_groupe', nom=groupe.get_nom_groupe(), id=Hebergement.get_hebergement_by_id(hebergement.get_id_hebergement()).get_id()) }}`"">Supprimer</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onclick="window.location.href=`{{ url_for('ajouter_hebergement_groupe', nom=groupe.get_nom_groupe()) }}`" class="btn btn-success btn-sm ms-2">Ajouter un hébergement</button>
+</div>
+
+{% endblock %}

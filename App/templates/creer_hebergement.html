@@ -1,0 +1,24 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('gestion_hebergements') }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour aux hébergements</a>
+</div>
+
+<form action="{{ url_for('creer_hebergement') }}" method="post" class="container-sm w-50 mt-5 p-5 border rounded-3">
+    {{ form.csrf_token }}
+    <div class="row">
+        <div class="input-group col mb-3">
+                {{ form.nom_hebergement.label(class="input-group-text") }} {{ form.nom_hebergement(class="form-control", placeholder="Nom de l'hébergement") }}
+        </div>
+        <div class="input-group  col mb-3">
+                {{ form.nb_place_jour.label(class="input-group-text") }} {{ form.nb_place_jour(class="form-control") }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="submit" value="Créer hébergement" class="btn btn-success">
+        </div>
+    </div>
+</form>
+
+{% endblock %}

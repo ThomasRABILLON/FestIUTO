@@ -1,0 +1,207 @@
+* {
+  color: #c9c9c9;
+}
+
+body {
+  background-color: #0b0909;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  margin-top: 16vh;
+  padding: 0;
+}
+
+main {
+  background-color: #202024;
+  border: 1px solid 00025f;
+  border-radius: 8px;
+  margin: 0 4vw;
+  padding: 1em 2em 2em 2em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+h1 {
+  font-size: 8em;
+}
+
+.presentation {
+  margin-left: 20vw;
+  display: flex;
+}
+
+.programme {
+  margin: 4vh 4vw 0 4vw;
+}
+
+.caroussel {
+  align-items: center;
+  /* background: #E3E3E3; */
+  display: flex;
+  /* height: 100vh; */
+  justify-content: center;
+  color: black;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-250px * 7));
+  }
+}
+
+.slider {
+  background: white;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  border-radius: 16px;
+
+  &::before,
+  &::after {
+    content: "";
+    height: 100px;
+    position: absolute;
+    width: 100px;
+    z-index: 0;
+  }
+
+  &::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+  }
+
+  &::before {
+    left: 0;
+    top: 0;
+  }
+
+  .slide-track {
+    animation: scroll 25s linear infinite;
+    display: flex;
+    width: calc(250px * 14);
+  }
+
+  .slide {
+    height: auto;
+    width: 500px;
+    margin: 1em 10px 0em 10px;
+  }
+}
+
+.tailleImage {
+  width: auto;
+  height: 3.5em;
+}
+
+.img {
+  width: auto;
+  height: 9em;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+}
+
+section.presentation {
+  position: relative;
+}
+
+.button_accueil {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/*css FESTIUT'O image*/
+#text-container {
+  margin-left: 4vw;
+  font-size: 23em;
+  text-align: center;
+  color: transparent;
+  background-clip: text;
+  /* Pour que l'image soit visible uniquement dans la zone du texte */
+  background-image: url("../images/festival_iut.jpg");
+  /* L'image de fond */
+  background-size: cover;
+  /* Pour que l'image de fond soit redimensionnée */
+  display: inline-block;
+  /* Pour que le conteneur prenne la taille du texte */
+}
+
+/*en dessous du carrousselle*/
+.suiteAccueil {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  margin-top: 7em;
+  margin-bottom: 7em;
+}
+
+.bloc {
+  border-radius: 15px;
+  /* Coins arrondis */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  /* Ombre légère */
+  width: 32em;
+  height: 32em;
+  text-align: center;
+}
+
+.suiteAccueil .bloc {
+  max-width: 400px;
+  /* Ajustez la largeur maximale selon vos besoins */
+}
+
+.suiteAccueil .titrebloc {
+  margin-bottom: 10px;
+}
+
+.imgbloc {
+  width: 15em;
+  height: auto;
+  margin: auto;
+}
+
+.imgalone {
+  width: 15em;
+  height: auto;
+  margin: auto;
+  border-radius: 40%;
+  margin-top: 2em;
+}
+
+.suiteAccueil .imgbloc {
+  border-radius: 50%; /* Pour rendre l'image ronde */
+  margin-bottom: 10px;
+}
+
+.texteaccueil {
+  margin-top: 4em;
+}
+
+.textetop {
+  margin-top: 2em;
+}
+
+.textcont {
+  margin-top: 2em;
+  font-size: 1.4em;
+}
+
+.gros {
+  padding: 3em;
+}
+
+.center {
+  text-align: center;
+}

@@ -1,48 +1,34 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    {% block head %}
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    {% block styles %}
-    <!-- Bootstrap CSS -->
-    {{ bootstrap.load_css() }} {% endblock %}
-    <title>{{ title }}</title>
-    {% endblock %}
-  </head>
-  <body>
-    <div
-      class="container w-25 position-absolute top-50 start-50 translate-middle border border-1 rounded-5 p-5"
-    >
-      <h1 class="mb-4">{{ title }}</h1>
+{% extends 'base.html' %} {% block main %}
+
+<div
+class="container-sm mt-5 mb-5 p-5 rounded-3 shadow-lg"
+>
+      <h1 class="mb-5 fs-1 text-center">{{ title }}</h1>
       <form method="post" action="/register">
         {{ form.csrf_token }}
         <div class="form-floating mb-4">
-          {{ form.email(size=20, type="email", class="form-control",
+          {{ form.email(size=20, type="email", class="form-control bg-dark text-light",
           id="floatingInput", placeholder="name@example.com" ) }}
           <label for="floatingInput">Adresse mail</label>
         </div>
         <div class="row mb-3">
           <div class="col">
-            {{ form.prenom(size=20, type="text", class="form-control",
+            {{ form.prenom(size=20, type="text", class="form-control bg-dark text-light",
             placeholder="Prénom") }}
           </div>
           <div class="col">
-            {{ form.nom(size=20, type="text", class="form-control",
+            {{ form.nom(size=20, type="text", class="form-control bg-dark text-light",
             placeholder="Nom") }}
           </div>
         </div>
         <div class="form-floating mb-4">
-          {{ form.mdp(size=20, type="password", class="form-control",
-          id="floatingPassword", placeholder="Mot de passe" ) }}
-          <label for="floatingPassword">{{ form.mdp.label }}</label>
+          {{ form.date_naissance(class="form-control bg-dark text-light") }}
+          {{ form.date_naissance.label(class="text-light") }}
         </div>
         <div class="form-floating mb-4">
-          {{ form.date_naissance() }}
+          {{ form.mdp(size=20, type="password", class="form-control bg-dark text-light",
+          id="floatingPassword", placeholder="Mot de passe" ) }}
+          <label for="floatingPassword">{{ form.mdp.label }}</label>
         </div>
         <input type="submit" class="btn btn-primary" />
         <a class="link-opacity-50-hover ms-5" href="{{url_for('login')}}"
@@ -51,6 +37,4 @@
       </form>
     </div>
 
-    {% block scripts %} {{ bootstrap.load_js() }} {% endblock %}
-  </body>
-</html>
+    {% block scripts %} {{ bootstrap.load_js() }} {% endblock %} {% endblock %}

@@ -1,27 +1,114 @@
-{% extends 'base.html' %} {% block main %}
+{% extends 'admin.html' %} {% block main %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-<div class="groupe">
-    <div class="groupe__image">
-        <img src="" alt="groupe">
-    </div>
-    <div class="groupe__info">
-        <h2>{{ groupe.get_nom_groupe() }}</h2>
-        <p>{{ groupe.get_description() }}</p>
-        <p>{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
-        <h3>Les artistes</h3>
-        <ul>
-        {% for artiste in artistes %}
-            <li>
-                <p>{{ artiste.get_nom() }} {{ artiste.get_prenom() }}</p>
-                <p>{{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}</p>
-            </li>
-        {% endfor %}
-      </ul>
-      <button onclick="window.location.href=`{{ url_for('ajouter_artiste', nom=groupe.get_nom_groupe()) }}`">Ajouter artiste</button>
-      <button onclick="window.location.href=`{{ url_for('evenements_groupe', nom=groupe.get_nom_groupe()) }}`">Voir les évènements</button>
-    </div>
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('gestion_groupes') }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour aux groupes</a>
 </div>
+
+
+<div class="container-sm mt-3">
+    <h2 class="fs-3 text">{{ groupe.get_nom_groupe() }}</h2>
+    <p class="fs-6 text">{{ groupe.get_description() }}</p>
+    <p  class="fs-6 text">Style : {{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
+    <br>
+    <h3 class="fs-4 text">Les artistes</h3>
+    {% if artistes|length == 0 %}
+    <p class="fs-6 text">Aucun artiste dans ce groupe</p>
+    {% else %}
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Nom</th>
+                <th scope="col" class="text-center">Prénom</th>
+                <th scope="col" class="text-center">Instrument</th>
+            </tr>
+        </thead>
+    {% for artiste in artistes %}
+        <tr>
+            <th scope="row" class="align-middle text-center">{{ artiste.get_id() }}</td>
+            <td class="align-middle text-center">{{ artiste.get_nom() }}</td>
+            <td class="align-middle text-center">{{ artiste.get_prenom() }}</td>
+            <td class="align-middle text-center">{{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}</td>
+            <td class="align-middle text-end">
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_artiste', nom=groupe.get_nom_groupe(), id=artiste.get_id()) }}`"">Supprimer</button>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+    <button onclick="window.location.href=`{{ url_for('ajouter_artiste', nom=groupe.get_nom_groupe()) }}`" class="btn btn-success btn-sm">Ajouter artiste</button>
+
+    <h3 class="fs-4 text mt-3">Les liens</h3>
+    {% if liens_rs|length == 0 and lien_video|length == 0 %}
+    <p class="fs-6 text">Aucun lien pour ce groupe</p>
+    {% else %}
+    <ul class="list-group mb-3">
+        {% for lien in liens_rs %}
+            <li class="list-group-item"><a href="{{ lien.get_lien_rs() }}">{{ lien.get_lien_rs() }}</a></li>
+        {% endfor %}
+        {% for lien in liens_video %}
+            <li class="list-group-item"><a href="{{ lien.get_lien_video() }}">{{ lien.get_lien_video() }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="{{ url_for('ajouter_lien', nom=groupe.get_nom_groupe()) }}" method="POST" class="mb-3">
+        <div class="mb-3">
+            <label for="lien_rs" class="form-label">Nouveau lien reseau social</label>
+            <input type="text" class="form-control" id="lien_rs" name="lien_rs">
+        </div>
+        <input type="submit" class="btn btn-success btn-sm" value="Ajouter lien">
+    </form>
+    <form action="{{ url_for('ajouter_lien', nom=groupe.get_nom_groupe()) }}" method="POST" class="mb-3">
+        <div class="mb-3">
+            <label for="lien_v" class="form-label">Nouveau lien vidéo</label>
+            <input type="text" class="form-control" id="lien_v" name="lien_v">
+        </div>
+        <input type="submit" class="btn btn-success btn-sm" value="Ajouter lien">
+    </form>
+
+    <h3 class="fs-4 text">Les photos</h3>
+    {% if photos|length == 0 %}
+    <p class="fs-6 text">Aucune photo pour ce groupe</p>
+    {% else %}
+    <div id="carouselExample" class="carousel slide mb-3">
+        <div class="carousel-inner">
+    {% set first = true %}
+    {% for photo in photos %}
+        {% if first %}
+            <div class="carousel-item active">
+                <img src="{{ url_for('show_image', image_id=photo.get_id()) }}" alt="Image {{ photo.get_id() }}" class="d-block w-100">
+            </div>
+            {% set first = false %}
+        {% else %}
+            <div class="carousel-item">
+                <img src="{{ url_for('show_image', image_id=photo.get_id()) }}" alt="Image {{ photo.get_id() }}" class="d-block w-100">
+            </div>
+        {% endif %}
+    {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    {% endif %}
+    <form action="{{ url_for('upload_image', nom=groupe.get_nom_groupe()) }}" method="POST" class="mb-3" enctype="multipart/form-data">
+        <div class="input-group mb-3">
+            <label for="image" class="input-group-text">Nouvelle photo</label>
+            <input type="file" name="image" accept="image/*" class="form-control" required>
+        </div>
+        <input type="submit" class="btn btn-success btn-sm" value="Ajouter image">
+    </form>
+
+    <button onclick="window.location.href=`{{ url_for('evenements_groupe', nom=groupe.get_nom_groupe()) }}`" class="btn btn-secondary btn-sm">Voir les évènements</button>
+    <button onclick="window.location.href=`{{ url_for('hebergements_groupe', nom=groupe.get_nom_groupe()) }}`" class="btn btn-secondary btn-sm">Gérer l'hébergement</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
 {% endblock %}
