@@ -1,5 +1,6 @@
+import io
 from .app import app
-from flask import redirect, render_template, url_for, request, flash
+from flask import redirect, render_template, url_for, request, flash, send_file
 
 from .models.Groupe import Groupe
 from .models.Spectateur import Spectateur
@@ -15,6 +16,9 @@ from .models.Instrument import Instrument
 from .models.A_Favori import A_Favori
 from .models.Hebergement import Hebergement
 from .models.Est_Heberger import Est_Heberger
+from .models.Lien_rs import Lien_rs
+from .models.Lien_video import Lien_video
+from .models.Photo import Photo
 
 from .models.LoginManager import load_user
 from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm, CreerEvenementForm, CreerHebergementForm
@@ -144,13 +148,30 @@ def gestion_groupes():
         return redirect(url_for('admin'))
     return render_template('gestion_groupes.html', groupes = Groupe.get_all_groupes(), Style_musical = Style_musical, Artiste = Artiste, Instrument = Instrument)
 
+@app.route('/admin/image/<int:image_id>')
+def show_image(image_id):
+    image = Photo.get_photo_by_id(image_id)
+    return send_file(io.BytesIO(image.get_photo()), mimetype='image/jpeg')
+
+@app.route('/admin/upload_image/<string:nom>', methods=['GET', 'POST'])
+@login_required
+def upload_image(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    if request.method == 'POST':
+        if request.files['image'] is not None:
+            image = request.files['image'].read()
+            id_g = Groupe.get_groupe_by_nom(nom).get_id()
+            Photo.insert_new_photo(image, id_g)
+    return redirect(url_for('gestion_groupes'))
+
 @app.route('/admin/gestion_groupe/<string:nom>')
 @login_required
 def gestion_groupe(nom):
     if not current_user_is_admin():
         return redirect(url_for('admin'))
     groupe = Groupe.get_groupe_by_nom(nom)
-    return render_template('gestion_groupe.html', groupe = groupe, artistes = Artiste.get_artiste_by_groupe(groupe.get_id()), Style_musical = Style_musical, Instrument = Instrument)
+    return render_template('gestion_groupe.html', groupe = groupe, artistes = Artiste.get_artiste_by_groupe(groupe.get_id()), liens_rs = Lien_rs.get_lien_rs_by_id_g(groupe.get_id()), liens_video = Lien_video.get_lien_video_by_id_g(groupe.get_id()), photos = Photo.get_photo_by_id_g(groupe.get_id()), Style_musical = Style_musical, Instrument = Instrument)
 
 @app.route('/admin/gestion_groupe/<string:nom>/supprimer_groupe')
 @login_required
@@ -159,6 +180,18 @@ def supprimer_groupe(nom):
         return redirect(url_for('admin'))
     Groupe.delete_groupe(nom)
     return redirect(url_for('gestion_groupes'))
+
+@app.route('/admin/gestion_groupe/<string:nom>/ajouter_lien', methods=['GET', 'POST'])
+@login_required
+def ajouter_lien(nom):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    if request.method == 'POST':
+        if request.form['lien_rs'] is not None and request.form['lien_rs'] != "":
+            Lien_rs.insert_new_lien_rs(request.form['lien_rs'], Groupe.get_groupe_by_nom(nom).get_id())
+        elif request.form['lien_v'] is not None and request.form['lien_v'] != "":
+            Lien_video.insert_new_lien_video(request.form['lien_v'], Groupe.get_groupe_by_nom(nom).get_id())
+    return redirect(url_for('gestion_groupe', nom = nom))
 
 @app.route('/admin/gestion_groupe/<string:nom>/supprimer_artiste/<int:id>')
 @login_required

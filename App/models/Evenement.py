@@ -14,12 +14,13 @@ class Evenement(db.Model):
     temps_montage = db.Column(db.Time)
     temps_demontage = db.Column(db.Time)
     est_public = db.Column(db.Boolean)
+    nb_place = db.Column(db.Integer)
     a_preinscription = db.Column(db.Boolean)
     id_g = db.Column(db.Integer, db.ForeignKey('GROUPE.id_g'))
     id_type_evenement = db.Column(db.Integer, db.ForeignKey('TYPE_EVENEMENT.id_type_evenement'))
     id_lieu = db.Column(db.Integer, db.ForeignKey('LIEU.id_lieu'))
 
-    def __init__(self, ref_evenement: str, jour_deb: int, heure_deb: time, jour_fin: int, heure_fin: time, duree: time, temps_montage: time, temps_demontage: time, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
+    def __init__(self, ref_evenement: str, jour_deb: int, heure_deb: time, jour_fin: int, heure_fin: time, duree: time, temps_montage: time, temps_demontage: time, est_public: bool, nb_place: int, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
         self.ref_evenement = ref_evenement
         self.jour_deb = jour_deb
         self.heure_deb = heure_deb
@@ -29,6 +30,7 @@ class Evenement(db.Model):
         self.temps_montage = temps_montage
         self.temps_demontage = temps_demontage
         self.est_public = est_public
+        self.nb_place = nb_place
         self.a_preinscription = a_preinscription
         self.id_g = id_g
         self.id_type_evenement = id_type_evenement
@@ -64,6 +66,9 @@ class Evenement(db.Model):
 
     def get_est_public(self) -> bool:
         return self.est_public
+    
+    def get_nb_place(self) -> int:
+        return self.nb_place
 
     def get_a_preinscription(self) -> bool:
         return self.a_preinscription
@@ -106,8 +111,8 @@ class Evenement(db.Model):
         return Evenement.query.filter_by(a_preinscription=True).all()
     
     @staticmethod
-    def insert_new_evenement(ref_evenement: str, jour_deb: int, heure_deb: time, jour_fin: int, heure_fin: time, duree: time, temps_montage: time, temps_demontage: time, est_public: bool, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
-        db.session.add(Evenement(ref_evenement, jour_deb, heure_deb, jour_fin, heure_fin, duree, temps_montage, temps_demontage, est_public, a_preinscription, id_g, id_type_evenement, id_lieu))
+    def insert_new_evenement(ref_evenement: str, jour_deb: int, heure_deb: time, jour_fin: int, heure_fin: time, duree: time, temps_montage: time, temps_demontage: time, est_public: bool, nb_place: int, a_preinscription: bool, id_g: int, id_type_evenement: int, id_lieu: int):
+        db.session.add(Evenement(ref_evenement, jour_deb, heure_deb, jour_fin, heure_fin, duree, temps_montage, temps_demontage, est_public, nb_place, a_preinscription, id_g, id_type_evenement, id_lieu))
         db.session.commit()
 
     @staticmethod

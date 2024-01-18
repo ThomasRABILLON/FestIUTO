@@ -133,9 +133,9 @@ class CreerEvenementForm(FlaskForm):
     heure_deb = TimeField('Heure début', validators=[DataRequired()])
     jour_fin = SelectField('Jour fin', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
     heure_fin = TimeField('Heure fin', validators=[DataRequired()])
-    duree = IntegerField('Durée', default=0, validators=[NumberRange(min=0, message="La durée doit être positive")])
     temps_montage = IntegerField('Temps montage', default=0, validators=[NumberRange(min=0, message="Le temps de montage doit être positif")])
     temps_demontage = IntegerField('Temps démontage', default=0, validators=[NumberRange(min=0, message="Le temps de démontage doit être positif")])
+    nb_place = IntegerField('Nombre de place', default=1, validators=[NumberRange(min=1, message="Il ne peux pas y avoir moins d'une place")])
     est_public = BooleanField('Public ?')
     a_preinscription = BooleanField('Pré-inscription ?')
     with app.app_context():
@@ -144,20 +144,16 @@ class CreerEvenementForm(FlaskForm):
         lieux = SelectField('Lieux', choices=[(i.get_id(), i.get_nom()) for i in Lieu.get_all_lieux()])
 
     def creer_evenement(self) -> None:
-        if not self.verif_date() and not self.verif_dispo_groupe() and not self.verif_dispo_lieu() and not self.verif_duree():
+        if not self.verif_date() or not self.verif_dispo_lieu() or not self.verif_dispo_groupe():
             return False
         ref_envenement = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(4))
-        Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, datetime.time(self.duree.data, 0, 0), datetime.time(self.temps_montage.data, 0, 0), datetime.time(self.temps_demontage.data, 0, 0), self.est_public.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
+        date_reference = datetime.datetime(2000, 1, 1)
+        duree = (date_reference + (datetime.datetime.combine(date_reference, self.heure_fin.data) - datetime.datetime.combine(date_reference, self.heure_deb.data))).time()
+        Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, duree, datetime.time(self.temps_montage.data, 0, 0), datetime.time(self.temps_demontage.data, 0, 0), self.est_public.data, self.nb_place.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
         return True
     
     def verif_dispo_groupe(self) -> bool:
-        if Evenement.get_evenements_by_groupe(self.groupes.data) is None:
-            return True
-        for evenement in Evenement.get_evenements_by_groupe(self.groupes.data):
-            if evenement.get_jour_deb() == self.jour_deb.data and evenement.get_jour_fin() == self.jour_fin.data:
-                if (evenement.get_heure_deb() >= self.heure_deb.data <= evenement.get_heure_fin()) or (evenement.get_heure_deb() >= self.heure_fin.data <= evenement.get_heure_fin()) or (self.heure_deb.data <= evenement.get_heure_deb() and self.heure_fin.data >= evenement.get_heure_fin()) or (self.heure_deb.data >= evenement.get_heure_deb() and self.heure_fin.data <= evenement.get_heure_fin()) or (self.heure_deb.data == evenement.get_heure_deb() and self.heure_fin.data == evenement.get_heure_fin()):
-                    return False
-        return True
+        return Groupe.groupe_est_dispo(self.groupes.data, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data)
     
     def verif_dispo_lieu(self) -> bool:
         if Evenement.get_evenements_by_lieu(self.lieux.data) is None:
@@ -177,11 +173,6 @@ class CreerEvenementForm(FlaskForm):
         if self.jour_deb.data > self.jour_fin.data:
             return False
         if self.jour_deb.data == self.jour_fin.data and self.heure_deb.data > self.heure_fin.data:
-            return False
-        return True
-    
-    def verif_duree(self) -> bool:
-        if self.duree.data <= time('00:00:00'):
             return False
         return True
 
