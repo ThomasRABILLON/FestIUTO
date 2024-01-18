@@ -105,7 +105,9 @@ def groupe(id):
         if retour:
             return redirect(url_for('mes_favoris'))
         return redirect(url_for('groupe', id = id))
-    return render_template('groupe.html', form = form, groupe = Groupe.get_groupe_by_id(id), artistes = Artiste.get_artiste_by_groupe(id), Style_musical = Style_musical, Instrument = Instrument, A_Favori = A_Favori)
+    groupe = Groupe.get_groupe_by_id(id)
+    est_favorit = A_Favori.get_favori_by_id(current_user.get_id(), id) is not None
+    return render_template('groupe.html', form = form, groupe = groupe, artistes = Artiste.get_artiste_by_groupe(groupe.get_id()), liens_rs = Lien_rs.get_lien_rs_by_id_g(groupe.get_id()), liens_video = Lien_video.get_lien_video_by_id_g(groupe.get_id()), photos = Photo.get_photo_by_id_g(groupe.get_id()), Style_musical = Style_musical, Instrument = Instrument, est_favorit = est_favorit)
 
 @app.route('/sup_favoris/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -197,10 +199,16 @@ def ajouter_lien(nom):
     if not current_user_is_admin():
         return redirect(url_for('admin'))
     if request.method == 'POST':
-        if request.form['lien_rs'] is not None and request.form['lien_rs'] != "":
-            Lien_rs.insert_new_lien_rs(request.form['lien_rs'], Groupe.get_groupe_by_nom(nom).get_id())
-        elif request.form['lien_v'] is not None and request.form['lien_v'] != "":
-            Lien_video.insert_new_lien_video(request.form['lien_v'], Groupe.get_groupe_by_nom(nom).get_id())
+        try:
+            if request.form['lien_rs'] is not None and request.form['lien_rs'] != "":
+                Lien_rs.insert_new_lien_rs(request.form['lien_rs'], Groupe.get_groupe_by_nom(nom).get_id())
+        except:
+            pass
+        try:
+            if request.form['lien_v'] is not None and request.form['lien_v'] != "":
+                Lien_video.insert_new_lien_video(request.form['lien_v'], Groupe.get_groupe_by_nom(nom).get_id())
+        except:
+            pass
     return redirect(url_for('gestion_groupe', nom = nom))
 
 @app.route('/admin/gestion_groupe/<string:nom>/supprimer_artiste/<int:id>')

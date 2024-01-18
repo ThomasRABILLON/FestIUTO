@@ -13,11 +13,14 @@
                         <div class="row mb-2">
                             <span>Journée {{ event.get_jour_deb() }} à {{event.get_heure_deb().strftime('%Hh%M')}}</span>
                         </div>
-                        <div class="row text-break">
+                        <div class="row text-break mb-3">
                             <span>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement: {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</span>
                         </div>
+                        <div class="row">
+                            <span>{% if event.get_est_public() == 1 %}Public{% endif %}</span>
+                        </div>
                     </div>
-                    <form action="{{ url_for('reservation', id=event.get_id()) }}" method="post" class="text-center mb-3">
+                    <form action="{{ url_for('reservation', id=event.get_id()) }}" method="post" class="text-center mb-2">
                         {{ form.csrf_token }}
                         <input type="submit" value="Réserver" class="btn btn-primary">
                     </form>

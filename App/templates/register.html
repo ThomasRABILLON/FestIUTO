@@ -3,30 +3,30 @@
 <div
 class="container-sm mt-5 mb-5 p-5 rounded-3 shadow-lg"
 >
-      <h1 class="mb-4">{{ title }}</h1>
+      <h1 class="mb-5 fs-1 text-center">{{ title }}</h1>
       <form method="post" action="/register">
         {{ form.csrf_token }}
         <div class="form-floating mb-4">
-          {{ form.email(size=20, type="email", class="form-control",
+          {{ form.email(size=20, type="email", class="form-control bg-dark",
           id="floatingInput", placeholder="name@example.com" ) }}
           <label for="floatingInput">Adresse mail</label>
         </div>
         <div class="row mb-3">
           <div class="col">
-            {{ form.prenom(size=20, type="text", class="form-control",
+            {{ form.prenom(size=20, type="text", class="form-control bg-dark",
             placeholder="Prénom") }}
           </div>
           <div class="col">
-            {{ form.nom(size=20, type="text", class="form-control",
+            {{ form.nom(size=20, type="text", class="form-control bg-dark",
             placeholder="Nom") }}
           </div>
         </div>
         <div class="form-floating mb-4">
-          {{ form.date_naissance(class="form-control") }}
-          {{ form.date_naissance.label }}
+          {{ form.date_naissance(class="form-control bg-dark") }}
+          {{ form.date_naissance.label(class="text-light") }}
         </div>
         <div class="form-floating mb-4">
-          {{ form.mdp(size=20, type="password", class="form-control",
+          {{ form.mdp(size=20, type="password", class="form-control bg-dark",
           id="floatingPassword", placeholder="Mot de passe" ) }}
           <label for="floatingPassword">{{ form.mdp.label }}</label>
         </div>

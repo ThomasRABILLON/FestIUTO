@@ -2,7 +2,10 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename = 'css/groupes.css') }}" />
-<h2>Mes groupe favoris :</h2>
+<h2>Mes groupe favoris</h2>
+{% if favoris|length == 0 %}
+<p class="fs-6 text-center mt-5">Aucun groupe favoris</p>
+{% else %}
 {% for favori in favoris %}
 {% set cpt = loop.index0 %}
 {% set groupe = Groupe.get_groupe_by_id(favori.get_id_g()) %}
@@ -23,5 +26,6 @@
   </div>
 </div>
 {% endfor %}
+{% endif %}
 
 {% endblock %}
