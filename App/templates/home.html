@@ -23,7 +23,7 @@
             transporte vers des horizons artistiques et culturels encore
             inexplorés !</p>
         <button class="button_accueil btn btn-dark"><a
-                class="text-light bg-dark" href="#">En savoir plus</a></button>
+                class="text-light bg-dark" href="{{ url_for('contact') }}">En savoir plus</a></button>
     </section>
 
 </main>
@@ -71,7 +71,7 @@
 <section class="suiteAccueil">
     <div class="bloc">
         <h2 class="titrebloc">Qui sommes-nous ?</h2>
-        <img class="imgbloc" src="../static/images/logo.png" alt="logo">
+        <a href="{{ url_for('contact') }}"><img class="imgbloc" src="../static/images/logo.png" alt="logo"></a>
         <p class="textetop">Nous sommes une équipe passionnée de créateurs,
             de visionnaires et de
             passionnés de l'expression artistique. Notre mission est de créer un
