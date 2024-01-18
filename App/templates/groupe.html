@@ -1,36 +1,30 @@
 {% extends 'base.html' %} {% block main %}
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/home.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/groupe.css') }}" />
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-<div class="groupe">
-    <div class="groupe__image">
-        <img src="" alt="groupe">
-    </div>
+  <div class="groupe">
     <div class="groupe__info">
-        <h2>{{ groupe.get_nom_groupe() }}</h2>
-        <p>{{ groupe.get_description() }}</p>
-        <p>{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
-        <h3>Les artistes</h3>
-        <ul>
+      <h2 class="group_name">{{ groupe.get_nom_groupe() }}</h2>
+      <p class="group_description">{{ groupe.get_description() }}</p>
+      <p class="group_style">{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
+      <h3>Les artistes</h3>
+      <ul class="list-group">
         {% for artiste in artistes %}
-            <li>
-                <p>{{ artiste.get_nom() }} {{ artiste.get_prenom() }}</p>
-                <p>{{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}</p>
-            </li>
+          <li class="list-group-item">{{ artiste.get_nom() }} {{ artiste.get_prenom() }} : {{ Instrument.get_instrument_by_id(artiste.get_id_instru()).get_nom_instru() }}
+          </li>
         {% endfor %}
       </ul>
     </div>
     {% if A_Favori.get_favori_by_id(current_user.get_id(), groupe.get_id()) %}
-    <form action="{{ url_for('sup_favoris', id=groupe.get_id()) }}" method="post">
+      <form action="{{ url_for('sup_favoris', id = groupe.get_id()) }}" method="post">
         {{ form.csrf_token }}
-        <input type="submit" value="Retirer des favoris">
-    </form>
+        <input type="submit" value="Retirer des favoris" />
+      </form>
     {% else %}
-    <form action="{{ url_for('groupe', id=groupe.get_id()) }}" method="post">
+      <form action="{{ url_for('groupe', id = groupe.get_id()) }}" method="post">
         {{ form.csrf_token }}
-        <input type="submit" value="Ajouter aux favoris">
-    </form>
+        <input type="submit" value="Ajouter aux favoris" />
+      </form>
     {% endif %}
-</div>
-
+  </div>
 {% endblock %}
