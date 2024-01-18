@@ -81,7 +81,9 @@ class ReserverEvenementForm(FlaskForm):
 
     def verif(self, ref_evenement: str, user: Spectateur) -> bool:
         # verifier si le spectateur a un billet
-        if Billet.get_billet_by_spectateur_and_1date(user.get_id(), Evenement.get_evenement_by_id(ref_evenement).get_jour_arrive()) is None and Billet.get_billet_by_spectateur_and_1date(user.get_id(), Evenement.get_evenement_by_id(ref_evenement).get_jour_depart()):
+        if Evenement.get_evenement_by_id(ref_evenement).get_est_public():
+            return True
+        if Billet.get_billet_by_spectateur_and_1date(user.get_id(), Evenement.get_evenement_by_id(ref_evenement).get_jour_deb()) is None and Billet.get_billet_by_spectateur_and_1date(user.get_id(), Evenement.get_evenement_by_id(ref_evenement).get_jour_fin()):
             return False
         # verifier si le spectateur a deja reserve
         if Est_Inscrit.get_inscription_by_spectateur_and_evenement(user.get_id(), ref_evenement) is not None:

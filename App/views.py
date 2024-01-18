@@ -343,11 +343,11 @@ def register():
     if form.validate_on_submit():
         if Spectateur.get_spectateur_by_mail(form.email.data) is not None:
             flash('Email déjà utilisé')
-            return render_template('register.html', title='Register', form=form)
+            return render_template('register.html', title='Créer un compte', form=form)
         form.create_account()
         flash('Votre compte a été créé !')
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='Créer un compte', form=form)
 
 @app.route("/logout/")
 @login_required
