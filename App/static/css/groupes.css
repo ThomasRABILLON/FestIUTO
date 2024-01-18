@@ -1,0 +1,115 @@
+.toGroup {
+    color: #c9c9c9;
+    position: relative;
+    text-decoration: none;
+}
+
+.toGroup::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: #c9c9c9;
+    bottom: 0;
+    left: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.toGroup:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.toGroup:hover {
+    color: #c9c9c9;
+}
+
+.pair {
+    background-color: #202024;
+    padding: 1em;
+}
+
+.impair {
+    background-color: #0b0909;
+    padding: 1em;
+}
+
+.banner {
+    width: 100%;
+    height: 10em;
+    filter: blur(5px) brightness(70%);
+    object-fit: cover;
+}
+
+.groupe__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    text-align: center;
+}
+
+.groupe__info>* {
+    width: 25%;
+}
+
+h2 {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    font-weight: 300;
+    font-size: 40px;
+    text-align: center;
+}
+
+.group_name h2 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    width: 160px;
+    text-align: center;
+    white-space: nowrap;
+    padding-bottom: 13px;
+}
+
+.group_name h2:before {
+    background-color: #c50000;
+    content: '';
+    display: block;
+    height: 3px;
+    width: 75px;
+    margin-bottom: 5px;
+}
+
+.group_name h2:after {
+    background-color: #c50000;
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    width: 75px;
+    margin-bottom: 0.25em;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}

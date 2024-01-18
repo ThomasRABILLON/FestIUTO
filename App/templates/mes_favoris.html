@@ -1,19 +1,25 @@
 {% extends 'base.html' %} {% block main %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename = 'css/groupes.css') }}" />
 <h2>Mes groupe favoris :</h2>
 {% for favori in favoris %}
+{% set cpt = loop.index0 %}
 {% set groupe = Groupe.get_groupe_by_id(favori.get_id_g()) %}
-<div class="groupe">
-  <div class="groupe__image">
-    <img src="" alt="groupe">
-  </div>
+{% if cpt % 2 == 0 %}
+<div class="groupe pair">
+  {% else %}
+  <div class="groupe impair">
+    {% endif %}
   <div class="groupe__info">
+    <div class="group_name">
     <h2>{{ groupe.get_nom_groupe() }}</h2>
+    </div>
     <p>{{ groupe.get_description() }}</p>
     <p>{{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
+    <div>
     <a href="{{ url_for('groupe', id=groupe.get_id()) }}">Voir plus</a>
+    </div>
   </div>
 </div>
 {% endfor %}

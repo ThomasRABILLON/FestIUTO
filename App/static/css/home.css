@@ -46,6 +46,7 @@ h1 {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(calc(-250px * 7));
   }
@@ -64,11 +65,6 @@ h1 {
 
   &::before,
   &::after {
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0) 100%
-    );
     content: "";
     height: 100px;
     position: absolute;
@@ -104,6 +100,7 @@ h1 {
   width: auto;
   height: 3.5em;
 }
+
 .img {
   width: auto;
   height: 9em;
@@ -130,10 +127,14 @@ section.presentation {
   font-size: 23em;
   text-align: center;
   color: transparent;
-  background-clip: text; /* Pour que l'image soit visible uniquement dans la zone du texte */
-  background-image: url("../images/festival_iut.jpg"); /* L'image de fond */
-  background-size: cover; /* Pour que l'image de fond soit redimensionnée */
-  display: inline-block; /* Pour que le conteneur prenne la taille du texte */
+  background-clip: text;
+  /* Pour que l'image soit visible uniquement dans la zone du texte */
+  background-image: url("../images/festival_iut.jpg");
+  /* L'image de fond */
+  background-size: cover;
+  /* Pour que l'image de fond soit redimensionnée */
+  display: inline-block;
+  /* Pour que le conteneur prenne la taille du texte */
 }
 
 /*en dessous du carrousselle*/
@@ -147,15 +148,18 @@ section.presentation {
 }
 
 .bloc {
-  border-radius: 15px; /* Coins arrondis */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Ombre légère */
+  border-radius: 15px;
+  /* Coins arrondis */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  /* Ombre légère */
   width: 32em;
   height: 32em;
   text-align: center;
 }
 
 .suiteAccueil .bloc {
-  max-width: 400px; /* Ajustez la largeur maximale selon vos besoins */
+  max-width: 400px;
+  /* Ajustez la largeur maximale selon vos besoins */
 }
 
 .suiteAccueil .titrebloc {
@@ -188,3 +192,4 @@ section.presentation {
 .textetop {
   margin-top: 2em;
 }
+

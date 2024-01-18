@@ -1,0 +1,34 @@
+.list-group-item {
+    background-color: #232335;
+    color: #c9c9c9;
+}
+
+.group_name {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.group_description {
+    font-size: larger;
+    margin-bottom: 1em;
+}
+
+.group_style {
+    margin-bottom: 1em;
+    font-size: xx-large;
+}
+
+.list-group{
+    margin: 1em 0;
+}
+
+input{
+    background-color: #232335;
+    color: #c9c9c9;
+    border-color: #232335;
+}
+
+input:hover{
+    background-color: #161622;
+    color: #c9c9c9;
+}
