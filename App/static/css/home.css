@@ -15,7 +15,7 @@ main {
   border: 1px solid 00025f;
   border-radius: 8px;
   margin: 0 4vw;
-  padding: 4em 2em 4em 8em;
+  padding: 1em 2em 2em 2em;
   display: flex;
   justify-content: space-evenly;
 }
@@ -187,4 +187,17 @@ section.presentation {
 
 .textetop {
   margin-top: 2em;
+}
+
+.textcont {
+  margin-top: 2em;
+  font-size: 1.4em;
+}
+
+.gros {
+  padding: 3em;
+}
+
+.center {
+  text-align: center;
 }
