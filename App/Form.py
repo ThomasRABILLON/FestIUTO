@@ -80,20 +80,19 @@ class ReserverEvenementForm(FlaskForm):
         return True
 
     def verif(self, ref_evenement: str, user: Spectateur) -> bool:
-        # verifier si le spectateur a un billet
         if Evenement.get_evenement_by_id(ref_evenement).get_est_public():
             return True
-        if Billet.get_billet_by_spectateur_and_1date(user.get_id(), Evenement.get_evenement_by_id(ref_evenement).get_jour_deb()) is None and Billet.get_billet_by_spectateur_and_1date(user.get_id(), Evenement.get_evenement_by_id(ref_evenement).get_jour_fin()):
-            return False
-        # verifier si le spectateur a deja reserve
-        if Est_Inscrit.get_inscription_by_spectateur_and_evenement(user.get_id(), ref_evenement) is not None:
-            return False
-        return True
+        if Est_Inscrit.get_inscription_by_spectateur_and_evenement(user.get_id(), ref_evenement) is None:
+            for billet in Billet.get_billet_by_spectateur(user.get_id()):
+                if billet.get_debut_validite() == Evenement.get_evenement_by_id(ref_evenement).get_jour_deb():
+                    return True
+        return False
 
 class MettreEnFavorisForm(FlaskForm):
 
     def mettre_en_favoris(self, user: Spectateur, id_g: int) -> None:
         if not self.verif_pas_deja_favorite(user, id_g):
+            A_Favori.delete_favori(user.get_id(), id_g)
             return False
         A_Favori.insert_new_favori(user.get_id(), id_g)
         return True

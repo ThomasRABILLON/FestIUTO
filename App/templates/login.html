@@ -3,17 +3,17 @@
   <div
     class="container-sm mt-5 mb-5 p-5 rounded-3 shadow-lg"
   >
-    <h1 class="mb-4">{{ title }}</h1>
+    <h1 class="mb-5 fs-1 text-center">{{ title }}</h1>
     <form method="post" action="/login">
       {{ form.csrf_token }}
       {{ form.hidden_tag() }}
       <div class="form-floating mb-4">
-        {{ form.email(size=20, type="email", class="form-control",
+        {{ form.email(size=20, type="email", class="form-control bg-dark",
         id="floatingInput", placeholder="name@example.com" ) }}
         {{ form.email.label(class="form-label") }}
       </div>
       <div class="form-floating mb-4">
-        {{ form.mdp(size=20, type="password", class="form-control",
+        {{ form.mdp(size=20, type="password", class="form-control bg-dark",
         id="floatingPassword", placeholder="Mot de passe" ) }}
         {{ form.mdp.label }}
       </div>
