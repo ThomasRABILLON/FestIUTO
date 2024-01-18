@@ -21,7 +21,7 @@ from .models.Lien_video import Lien_video
 from .models.Photo import Photo
 
 from .models.LoginManager import load_user
-from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm, CreerEvenementForm, CreerHebergementForm
+from .Form import LoginForm, RegisterForm, AcheterBilletForm, ReserverEvenementForm, MettreEnFavorisForm, CreerGroupeForm, AjouterArtisteForm, CreerEvenementForm, CreerHebergementForm, CreerLieuForm
 
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -328,6 +328,31 @@ def supprimer_hebergement(id):
     return redirect(url_for('gestion_hebergements'))
 
 
+@app.route('/admin/gestion_lieux')
+@login_required
+def gestion_lieux():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    return render_template('gestion_lieux.html', lieux = Lieu.get_all_lieux())
+
+@app.route('/admin/gestion_lieux/creer_lieu', methods=['GET', 'POST'])
+@login_required
+def creer_lieu():
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    form = CreerLieuForm()
+    if form.validate_on_submit():
+        form.creer_lieu()
+        return redirect(url_for('gestion_lieux'))
+    return render_template('creer_lieu.html', form = form)
+
+@app.route('/admin/gestion_lieux/supprimer_lieu/<int:id>')
+@login_required
+def supprimer_lieu(id):
+    if not current_user_is_admin():
+        return redirect(url_for('admin'))
+    Lieu.delete_lieu(id)
+    return redirect(url_for('gestion_lieux'))
 
 
 

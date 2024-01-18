@@ -28,3 +28,15 @@ class Lieu(db.Model):
     @staticmethod
     def get_lieu_by_id(id_lieu: int):
         return Lieu.query.filter_by(id_lieu=id_lieu).first()
+
+    @staticmethod
+    def insert_new_lieu(nom: str, emplacement: str):
+        new_lieu = Lieu(nom, emplacement)
+        db.session.add(new_lieu)
+        db.session.commit()
+
+    @staticmethod
+    def delete_lieu(id_lieu: int):
+        lieu = Lieu.query.filter_by(id_lieu=id_lieu).first()
+        db.session.delete(lieu)
+        db.session.commit()

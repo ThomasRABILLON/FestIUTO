@@ -1,0 +1,20 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('gestion_lieux') }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour à la gestion des lieux</a>
+</div>
+
+<form action="{{ url_for('creer_lieu') }}" method="post" class="container-sm w-50 mt-5 p-5 border rounded-3">
+    {{ form.csrf_token }}
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">{{ form.nom.label }}</span>
+        {{ form.nom(size=20, class="form-control", placeholder="Nom du lieu") }}
+    </div>
+    <div class="input-group mb-3">
+        <label class="input-group-text">{{ form.emplacement.label }}</label>
+        {{ form.emplacement(class="form-control", placeholder="Emplacement du lieu") }}
+    </div>
+    <input type="submit" value="Créer" class="btn btn-success">
+</form>
+
+{% endblock %}
