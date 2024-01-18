@@ -41,6 +41,10 @@ class Est_Heberger(db.Model):
         return Est_Heberger.query.all()
 
     @staticmethod
+    def get_est_heberger_by_id_est_heberger(id: int):
+        return Est_Heberger.query.filter_by(id=id).first()
+
+    @staticmethod
     def get_est_heberger_by_id(id_g: int, id_hebergement: int):
         return Est_Heberger.query.filter_by(id_g=id_g, id_hebergement=id_hebergement).first()
 
@@ -79,4 +83,9 @@ class Est_Heberger(db.Model):
     @staticmethod
     def delete_est_heberger(id_g: int, id_hebergement: int):
         db.session.delete(Est_Heberger.get_est_heberger_by_id(id_g, id_hebergement))
+        db.session.commit()
+
+    @staticmethod
+    def delete_est_heberger_by_id(id: int):
+        db.session.delete(Est_Heberger.get_est_heberger_by_id_est_heberger(id))
         db.session.commit()

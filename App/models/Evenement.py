@@ -1,5 +1,6 @@
 from ..app import db
 
+from .Est_Inscrit import Est_Inscrit
 
 import time
 
@@ -126,5 +127,7 @@ class Evenement(db.Model):
 
     @staticmethod
     def delete_evenement(ref_evenement: str):
+        for inscrit in Est_Inscrit.get_inscription_by_ref_evenement(ref_evenement):
+            Est_Inscrit.delete_inscription(inscrit.get_mail(), ref_evenement)
         Evenement.query.filter_by(ref_evenement=ref_evenement).delete()
         db.session.commit()
