@@ -1,0 +1,70 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container-sm mt-5 p-5">
+    <form action="{{ url_for('creer_evenement') }}" method="post">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="input-group mb-3 col">
+                {{ form.groupes.label(class="input-group-text") }}
+                {{ form.groupes(class="form-select") }}
+            </div>
+            <div class="input-group mb-3 col">
+                {{ form.type_evenements.label(class="input-group-text") }}
+                {{ form.type_evenements(class="form-select") }}
+            </div>
+            <div class="input-group mb-3 col">
+                {{ form.lieux.label(class="input-group-text") }}
+                {{ form.lieux(class="form-select") }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-group mb-3 col">
+                {{ form.jour_deb.label(class="input-group-text") }}
+                {{ form.jour_deb(class="form-select") }}
+            </div>
+            <div class="input-group mb-3 col">
+                {{ form.jour_fin.label(class="input-group-text") }}
+                {{ form.jour_fin(class="form-select") }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3 col">
+                {{ form.heure_deb.label(class="input-group-text") }}
+                {{ form.heure_deb(class="form-control") }}
+            </div>
+            <div class="input-group mb-3 col">
+                {{ form.heure_fin.label(class="input-group-text") }}
+                {{ form.heure_fin(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-group mb-3 col">
+                {{ form.temps_montage.label(class="input-group-text") }}
+                {{ form.temps_montage(class="form-control") }}
+            </div>
+            <div class="input-group mb-3 col">
+                {{ form.temps_demontage.label(class="input-group-text") }}
+                {{ form.temps_demontage(class="form-control") }}
+            </div>
+            <div class="input-group mb-3 col">
+                {{ form.nb_place.label(class="input-group-text") }}
+                {{ form.nb_place(class="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-check mb-3 ms-3 col">
+            {{ form.a_preinscription.label(class="form-check-label") }}
+            {{ form.a_preinscription(class="form-check-input") }}
+        </div>
+        <div class="form-check mb-3 ms-3 col">
+            {{ form.est_public.label(class="form-check-label") }}
+            {{ form.est_public(class="form-check-input") }}
+        </div>
+        <input type="submit" value="Créer" class="btn btn-success">
+    </form>
+</div>
+
+
+{% endblock %}

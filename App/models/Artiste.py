@@ -47,3 +47,8 @@ class Artiste(db.Model):
     def insert_new_artiste(nom: str, prenom: str, id_g: int, id_instru: int) -> None:
         db.session.add(Artiste(nom, prenom, id_g, id_instru))
         db.session.commit()
+
+    @staticmethod
+    def delete_artiste(id_art: int) -> None:
+        Artiste.query.filter_by(id_art=id_art).delete()
+        db.session.commit()

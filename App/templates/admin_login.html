@@ -1,0 +1,15 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container w-25 position-absolute top-50 start-50 translate-middle border border-1 rounded-5 p-5">
+    <form action="{{ url_for('admin') }}" method="post">
+        <div class="form-floating mb-4">
+            <input type="password" class="form-control" id="floatingPassword" name="mdp" placeholder="Mot de passe">
+            <label for="floatingPassword">Mot de passe</label>
+        </div>
+        <div class="d-grid gap-2">
+            <input type="submit" class="btn btn-primary" value="Se connecter">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

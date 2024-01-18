@@ -1,15 +1,16 @@
 {% extends 'admin.html' %} {% block main %}
 
 <div class="container-fluid mt-2">
-    <a href="{{ url_for('gestion_groupe', nom=groupe.get_nom_groupe()) }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour au groupe</a>
+    <a href="{{ url_for('panel') }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour au panel d'administration</a>
 </div>
 
 <div class="mt-5">
-    <h1 class="text-center">Les évènements de {{ groupe.get_nom_groupe() }}</h1>
+    <h1 class="text-center">Les évènements</h1>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Groupe</th>
                 <th scope="col" class="text-center">Type</th>
                 <th scope="col" class="text-center">Début évènment</th>
                 <th scope="col" class="text-center">Fin évènement</th>
@@ -25,6 +26,7 @@
             {% for event in events %}
                 <tr>
                     <th scope="row" class="align-middle text-center">{{ event.get_id() }}</td>
+                    <td class="align-middle text-center"><a href="{{ url_for('gestion_groupe', nom=Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()) }}">{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</a></td>
                     <td class="align-middle text-center">{{ Type_evenement.get_type_evenement_by_id(Evenement.get_evenement_by_id(event.get_ref_evenement()).get_id_type_evenement()).get_libelle() }}</td>
                     <td class="align-middle text-center">Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb().strftime('%Hh%M') }}</td>
                     <td class="align-middle text-center">Journée {{ event.get_jour_fin() }} à {{ event.get_heure_fin().strftime('%Hh%M') }}</td>
@@ -35,12 +37,13 @@
                     <td class="align-middle text-center">{% if event.get_est_public() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-center">{% if event.get_a_preinscription() == 1 %}Oui{% else %}Non{% endif %}</td>
                     <td class="align-middle text-end">
-                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_evenement_groupe', nom=groupe.get_nom_groupe(), ref=event.get_id()) }}`"">Supprimer</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="window.location.href=`{{ url_for('supprimer_evenement', ref=event.get_id()) }}`"">Supprimer</button>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="{{ url_for('creer_evenement') }}" class="btn btn-success btn-sm ms-2">Créer un évènements</a>
 </div>
 
 {% endblock %}

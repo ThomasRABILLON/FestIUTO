@@ -1,0 +1,47 @@
+{% extends 'admin.html' %} {% block main %}
+
+<div class="container-fluid mt-2">
+    <a href="{{ url_for('hebergements_groupe', nom=groupe.get_nom_groupe()) }}" style="text-decoration: none; color: black;"><img src="{{ url_for('static', filename='images/fleche-gauche.png') }}" alt="" style="width: 25px;">Retour aux hébergements du groupe</a>
+</div>
+
+<form action="{{ url_for('ajouter_hebergement_groupe', nom=groupe.get_nom_groupe()) }}" method="get" class="container-sm w-50 mt-5 p-5 border rounded-3">
+    <div class="row">
+        <div class="input-group col mb-3">
+            <label for="date_debut" class="input-group-text">Journée du début</label>
+            {% if date_debut is not none %}
+            <input type="number" name="date_debut" id="date_debut" class="form-control" min="1" max="3" value="{{ date_debut }}">
+            {% else %}
+            <input type="number" name="date_debut" id="date_debut" class="form-control" min="1" max="3" value="1">
+            {% endif %}
+        </div>
+        <div class="input-group col mb-3">
+            <label for="date_fin" class="input-group-text">Journée de fin</label>
+            {% if date_fin is not none %}
+            <input type="number" name="date_fin" id="date_fin" class="form-control" min="1" max="3" value="{{ date_fin }}">
+            {% else %}
+            <input type="number" name="date_fin" id="date_fin" class="form-control" min="1" max="3" value="1">
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group col mb-3">
+            {% if hebergements is not none %}
+            <label for="id_hebergement" class="input-group-text">Hébergement disponible</label>
+            <select name="id_hebergement" id="id_hebergement" class="form-select">
+                <option value="-1">Choisir un hébergement</option>
+                {% for hebergement in hebergements %}
+                <option value="{{ hebergement.get_id() }}">{{ hebergement.get_nom_hebergement() }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="submit" value="Ajouter le groupe à l'hébergement" class="btn btn-success">
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
