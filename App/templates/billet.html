@@ -1,33 +1,75 @@
 {% extends 'base.html' %} {% block main %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/billet.css') }}">
 
-<div>
-    <p>Bonjour</p>
+<div class="position_text">
+    <h1>Pass festival pour tout le FestIUT'O</h1>
+    <p>Ne manquez rien de l'action et plongez dans l'expérience musicale ultime
+        avec
+        notre pass festival pour toute la durée du FestIUT'O ! Profitez de
+        chaque
+        moment, de chaque note et de chaque performance tout au long du
+        festival.
+        Avec un accès complet, explorez tous les recoins du FestIUT'O, découvrez
+        des talents émergents, vibrez au rythme de vos artistes préférés et
+        créez
+        des souvenirs qui resteront gravés à jamais. Réservez votre pass
+        festival
+        maintenant et embarquez pour une aventure musicale inoubliable !</p>
 </div>
+
 <div class="billet billet-all-stars">
-    <h2>Pass All Stars</h2>
-    <button
+    <h2 class="rainbow">Pass All Stars</h2>
+    <button class="rainbow-5"
         onclick="window.location.href=`{{ url_for('achat_billet', id=billet3.get_id()) }}`"><img
             src="{{ url_for('static', filename='images/logo_billet.png') }}"
-            alt="logo billet"> {{ billet3.get_prix() }}€</button>
+            alt="logo billet"> <span class="prix">{{ billet3.get_prix() }}€</span></button>
+</div>
+
+<div class="position_text">
+    <h1>Billet pour 2 jours au FestIUT'O</h1>
+    <p>Pour les amateurs de musique qui veulent prolonger l'aventure FestIUT'O,
+        notre billet pour 2 jours est la solution idéale ! Plongez dans deux
+        jours
+        intenses et variés de concerts, d'animations et de découvertes
+        artistiques.
+        Profitez pleinement de l'ambiance électrique du festival, rencontrez des
+        passionnés de musique comme vous et créez des souvenirs mémorables.
+        Réservez
+        dès maintenant votre billet pour 2 jours et laissez-vous emporter par l'esprit
+        festif du FestIUT'O !</p>
 </div>
 
 <div class="billet billet-2-jour">
-    <h2>Pass 2 jour</h2>
-    <button
+    <h2 class="colorb2">Pass 2 jour</h2>
+    <button class="rainbow-4"
         onclick="window.location.href=`{{ url_for('achat_billet', id=billet2.get_id()) }}`"><img
             src="{{ url_for('static', filename='images/logo_billet.png') }}"
-            alt="logo billet"> {{ billet2.get_prix() }}€</button>
+            alt="logo billet"> <span class="prix">{{ billet2.get_prix() }}€</span></button>
+</div>
+
+<div class="position_text">
+    <h1>Billet d'une journée pour FestIUT'O</h1>
+    <p>Vivez l'effervescence musicale du FestiIUT'O le temps d'une journée
+        inoubliable !
+        Avec notre billet journalier, plongez au cœur de l'énergie contagieuse
+        des
+        concerts qui animeront le festival.
+        Profitez d'une expérience musicale immersive, découvrez des artistes
+        exceptionnels et partagez des moments mémorables avec une communauté
+        passionnée.
+        N'attendez plus, réservez votre billet d'une journée et préparez-vous à
+        vivre une journée de pur plaisir musical au FestIUT'O !</p>
 </div>
 
 <div class="billet billet-1-jour">
-    <h2>Pass 1 jour</h2>
-    <button
+    <h2 class="colorb3">Pass 1 jour</h2>
+    <button class="rainbow-3"
         onclick="window.location.href=`{{ url_for('achat_billet', id=billet1.get_id()) }}`"><img
             src="{{ url_for('static', filename='images/logo_billet.png') }}"
-            alt="logo billet"> {{ billet1.get_prix() }}€</button>
+            alt="logo billet"> <span class="prix">{{ billet1.get_prix() }}€
+        </span></button>
 </div>
 
 {% endblock %}

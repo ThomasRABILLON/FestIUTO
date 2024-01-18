@@ -1,22 +1,48 @@
 {% extends 'base.html' %} {% block main %}
 
+<h1 id="text-container">FESTIUT'O</h1>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/carte.css') }}">
+>>>>>>> develop
 <main>
-    <h1>FestIUT'O</h1>
+    <div class="header-container">
+        <h1>FestIUT'</h1>
+        <img class="img" src="../static/images/logo.png" alt="logo">
+    </div>
     <section class="presentation">
-        <p>Plongez dans un univers vibrant de créativité et de découvertes : bienvenue à notre festival où l'art, la musique et la culture fusionnent pour créer des moments inoubliables.</p>
+        <p style="font-size: 1em;">Explorez un monde foisonnant de créativité
+            et
+            de découvertes :
+            bienvenue à notre festival où l'art, la musique et la culture se
+            fondent pour donner naissance à des moments inoubliables. Plongez au
+            cœur d'une expérience unique, où l'expression artistique prend vie,
+            éveillant vos sens à de nouvelles dimensions. Rejoignez-nous pour
+            célébrer la fusion enchanteresse de l'inspiration, de la mélodie et
+            de l'âme, créant ainsi une symphonie inédite de souvenirs qui
+            perdureront dans votre esprit. Que la magie de notre festival vous
+            transporte vers des horizons artistiques et culturels encore
+            inexplorés !</p>
+        <button class="button_accueil btn btn-dark"><a
+                class="text-light bg-dark" href="#">En savoir plus</a></button>
     </section>
-    
+
 </main>
+
 <section class="programme">
     <h2>Programme</h2>
-    <p>Le festival se déroulera du 1er au 3 juin 2018.</p>
+    <p>Le festival se déroulera du 1er au 3 juin 2024.</p>
     <div class="caroussel">
         <div class="slider">
-            <div class="slide-track" style="width: calc(250px * {{ events|length }} * 2);">
+            <div class="slide-track"
+                style="width: calc(250px * {{ events|length }} * 2);">
                 {% for event in events %}
+                {% set cpt = loop.index0 %}
                 <div class="slide">
-                    <div class="event-container">
-                        <h3>{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</h3>
+                    <div
+                        class="event-container {% if cpt % 2 == 0 %}pair{% else %}impair{% endif %}">
+                        <h3>{{
+                            Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()
+                            }}</h3>
                         <br>
                         <p>Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb() }}h</p>
                         <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
@@ -24,9 +50,13 @@
                 </div>
                 {% endfor %}
                 {% for event in events %}
+                {% set cpt = loop.index0 %}
                 <div class="slide">
-                    <div class="event-container">
-                        <h3>{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</h3>
+                    <div
+                        class="event-container {% if cpt % 2 == 0 %}pair{% else %}impair{% endif %}">
+                        <h3>{{
+                            Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()
+                            }}</h3>
                         <br>
                         <p>Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb() }}h</p>
                         <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
@@ -38,4 +68,38 @@
     </div>
 </section>
 
+<section class="suiteAccueil">
+    <div class="bloc">
+        <h2 class="titrebloc">Qui sommes-nous ?</h2>
+        <img class="imgbloc" src="../static/images/logo.png" alt="logo">
+        <p class="textetop">Nous sommes une équipe passionnée de créateurs,
+            de visionnaires et de
+            passionnés de l'expression artistique. Notre mission est de créer un
+            espace où l'art, la musique et la culture convergent pour donner
+            naissance à des moments qui transcendent l'éphémère. Au-delà d'un
+            simple événement...</p>
+    </div>
+    <div class="bloc">
+        <h2 class="titrebloc">Acheter maintenant</h2>
+        <a href="{{ url_for('billet') }}"><img class="imgbloc"
+                src="../static/images/ticket.png" alt="logo"></a>
+        <p>🎵
+            Préparez-vous à vivre une aventure musicale inoubliable au cœur de
+            notre festival sensationnel. Plongez dans une mer de mélodies
+            enivrantes, explorez des sons variés et laissez-vous emporter par l'énergie
+            électrisante des performances live🎵</p>
+    </div>
+
+    <div class="bloc">
+        <h2 class="titrebloc">Inscrivez-vous</h2>
+        <a href="{{ url_for('register') }}"><img class="imgalone"
+                src="../static/images/image_accueil_bas_concert"
+                alt="logo"></a>
+        <p class="texteaccueil">
+            Nous sommes ravis de vous inviter à un concert extraordinaire qui
+            promet de faire vibrer votre âme. Plongez au cœur de l'énergie
+            musicale, entourés d'une atmosphère envoûtante et de performances
+            captivantes.</p>
+    </div>
+</section>
 {% endblock %}
