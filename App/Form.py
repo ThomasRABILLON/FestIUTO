@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, HiddenField, TextAreaField, DateField, IntegerField, SelectField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, HiddenField, TextAreaField, DateField, IntegerField, SelectField, TimeField, BooleanField
+from wtforms.validators import DataRequired, NumberRange
 from hashlib import sha256
 
 from .models.Spectateur import Spectateur 
@@ -13,8 +13,15 @@ from .models.Groupe import Groupe
 from .models.Style_musical import Style_musical
 from .models.Artiste import Artiste
 from .models.Instrument import Instrument
+from .models.Type_evenement import Type_evenement
+from .models.Lieu import Lieu
+from .models.Hebergement import Hebergement
 
+import random
+import string
+import time
 import datetime
+
 from .app import app
 
 
@@ -113,53 +120,65 @@ class CreerGroupeForm(FlaskForm):
         return False
 
 class AjouterArtisteForm(FlaskForm):
-    nom = StringField('Nom de l\'artiste', validators=[DataRequired()])
-    prenom = StringField('Prenom de l\'artiste', validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
     with app.app_context():
-        instrument = SelectField('Instrument de l\'artiste', choices=[(i.get_id(), i.get_nom_instru()) for i in Instrument.get_all_instruments()])
+        instrument = SelectField('Instrument', choices=[(i.get_id(), i.get_nom_instru()) for i in Instrument.get_all_instruments()])
 
     def ajouter_artiste(self, id_g: int) -> None:
         Artiste.insert_new_artiste(self.nom.data, self.prenom.data, id_g, self.instrument.data)
 
-# class EditProfilForm(FlaskForm):
-#     pseudo = StringField('Pseudo')
-#     nom = StringField('Nom')
-#     prenom = StringField('Prenom')
-#     password = PasswordField('Password')
+class CreerEvenementForm(FlaskForm):
+    jour_deb = SelectField('Jour début', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
+    heure_deb = TimeField('Heure début', validators=[DataRequired()])
+    jour_fin = SelectField('Jour fin', validators=[DataRequired()], choices=[(1,1), (2,2), (3,3)])
+    heure_fin = TimeField('Heure fin', validators=[DataRequired()])
+    temps_montage = IntegerField('Temps montage', default=0, validators=[NumberRange(min=0, message="Le temps de montage doit être positif")])
+    temps_demontage = IntegerField('Temps démontage', default=0, validators=[NumberRange(min=0, message="Le temps de démontage doit être positif")])
+    nb_place = IntegerField('Nombre de place', default=1, validators=[NumberRange(min=1, message="Il ne peux pas y avoir moins d'une place")])
+    est_public = BooleanField('Public ?')
+    a_preinscription = BooleanField('Pré-inscription ?')
+    with app.app_context():
+        type_evenements = SelectField('Types', choices=[(i.get_id(), i.get_libelle()) for i in Type_evenement.get_all_type_evenement()])
+        groupes = SelectField('Groupes', choices=[(i.get_id(), i.get_nom_groupe()) for i in Groupe.get_all_groupes()])
+        lieux = SelectField('Lieux', choices=[(i.get_id(), i.get_nom()) for i in Lieu.get_all_lieux()])
 
-#     def edit_profil(self, user: User) -> None:
-#         # update user
-#         if self.pseudo.data != "":
-#             user.pseudo = self.pseudo.data
-#         if self.nom.data != "":
-#             user.nom = self.nom.data
-#         if self.prenom.data != "":
-#             user.prenom = self.prenom.data
-#         if self.password.data != "":
-#             m = sha256()
-#             m.update(self.password.data.encode())
-#             passwd = m.hexdigest()
-#             user.password = passwd
-#         UserDB.update_user(user)
+    def creer_evenement(self) -> None:
+        if not self.verif_date() or not self.verif_dispo_lieu() or not self.verif_dispo_groupe():
+            return False
+        ref_envenement = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(4))
+        date_reference = datetime.datetime(2000, 1, 1)
+        duree = (date_reference + (datetime.datetime.combine(date_reference, self.heure_fin.data) - datetime.datetime.combine(date_reference, self.heure_deb.data))).time()
+        Evenement.insert_new_evenement(ref_envenement, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data, duree, datetime.time(self.temps_montage.data, 0, 0), datetime.time(self.temps_demontage.data, 0, 0), self.est_public.data, self.nb_place.data, self.a_preinscription.data, self.groupes.data, self.type_evenements.data, self.lieux.data)
+        return True
+    
+    def verif_dispo_groupe(self) -> bool:
+        return Groupe.groupe_est_dispo(self.groupes.data, self.jour_deb.data, self.heure_deb.data, self.jour_fin.data, self.heure_fin.data)
+    
+    def verif_dispo_lieu(self) -> bool:
+        if Evenement.get_evenements_by_lieu(self.lieux.data) is None:
+            return True
+        for evenement in Evenement.get_evenements_by_lieu(self.lieux.data):
+            if evenement.get_jour_deb() == self.jour_deb.data and evenement.get_jour_fin() == self.jour_fin.data:
+                if (evenement.get_heure_deb() - evenement.get_temps_montage() >= self.heure_deb.data - self.temps_montage.data <= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (evenement.get_heure_deb() - evenement.get_temps_montage() >= self.heure_fin.data + self.temps_demontage.data <= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (self.heure_deb.data - self.temps_montage.data <= evenement.get_heure_deb() - evenement.get_temps_montage() and self.heure_fin.data + self.temps_demontage.data >= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (self.heure_deb.data - self.temps_montage.data >= evenement.get_heure_deb() - evenement.get_temps_montage() and self.heure_fin.data + self.temps_demontage.data <= evenement.get_heure_fin() + evenement.get_temps_demontage()) or (self.heure_deb.data - self.temps_montage.data == evenement.get_heure_deb() - evenement.get_temps_montage() and self.heure_fin.data + self.temps_demontage.data == evenement.get_heure_fin() + evenement.get_temps_demontage()):
+                    return False
+        return True
+    
+    def verif_heure(self) -> bool:
+        if self.heure_deb.data >= self.heure_fin.data:
+            return False
+        return True
+    
+    def verif_date(self) -> bool:
+        if self.jour_deb.data > self.jour_fin.data:
+            return False
+        if self.jour_deb.data == self.jour_fin.data and self.heure_deb.data > self.heure_fin.data:
+            return False
+        return True
 
-# class PostForm(FlaskForm):
-#     titre = StringField('Titre', validators=[DataRequired()])
-#     contenu = TextAreaField('Contenu', validators=[DataRequired()])
+class CreerHebergementForm(FlaskForm):
+    nom_hebergement = StringField('Nom', validators=[DataRequired()])
+    nb_place_jour = IntegerField('Nombre de place par jour', default=1, validators=[NumberRange(min=1, message="Il ne peux pas y avoir moins d'une place par jour")])
 
-#     def create_post(self, user: User) -> None:
-#         id = PostDB.get_max_id()
-#         if id is None:
-#             id = -1
-#         PostDB.insert_new_post(id+1, self.titre.data, self.contenu.data, datetime.datetime.now(), user)
-
-# class CommentaireForm(FlaskForm):
-#     texte = TextAreaField('Contenu', validators=[DataRequired()])
-
-#     def create_commentaire(self, user: User, post: int) -> None:
-#         CommentaireDB.insert_new_commentaire(user.get_email(), post, self.texte.data)
-# class SearchForm(FlaskForm):
-#     titre = StringField('Titre', validators=[DataRequired()])
-
-#     def search_post_by_titre(self) -> list:
-#         return PostDB.search_all_posts_by_titre(self.titre.data)
-      
+    def creer_hebergement(self) -> None:
+        Hebergement.insert_hebergement(self.nom_hebergement.data, self.nb_place_jour.data)

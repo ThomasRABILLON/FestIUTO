@@ -44,12 +44,8 @@
                             Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()
                             }}</h3>
                         <br>
-                        <p>Journée {{ event.get_jour_arrive() }} à {{
-                            event.get_heure_arrive() }}h</p>
-                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom()
-                            }}, emplacement : {{
-                            Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement()
-                            }}</p>
+                        <p>Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb() }}h</p>
+                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
                     </div>
                 </div>
                 {% endfor %}
@@ -62,12 +58,8 @@
                             Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe()
                             }}</h3>
                         <br>
-                        <p>Journée {{ event.get_jour_arrive() }} à {{
-                            event.get_heure_arrive() }}h</p>
-                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom()
-                            }}, emplacement : {{
-                            Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement()
-                            }}</p>
+                        <p>Journée {{ event.get_jour_deb() }} à {{ event.get_heure_deb() }}h</p>
+                        <p>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement : {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</p>
                     </div>
                 </div>
                 {% endfor %}
