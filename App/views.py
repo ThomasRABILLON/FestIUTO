@@ -62,6 +62,12 @@ def mes_billets():
         return redirect(url_for('login'))
     return render_template('mes_billets.html', billets = Billet.get_billet_by_spectateur(current_user.get_id()), Type_billet = Type_billet)
 
+@app.route('/programme', methods=['GET', 'POST'])
+def programme():
+    if request.method == 'GET':
+        if request.args.get('style') is not None and request.args.get('style') != "" and int(request.args.get('style')) != 0:
+            return render_template('programme.html', events = Evenement.get_evenements_by_style(int(request.args.get('style')), Groupe), styles = Style_musical.get_all_styles(), Groupe = Groupe, Lieu = Lieu, id_style = int(request.args.get('style')))
+    return render_template('programme.html', events = Evenement.get_all_evenements(), styles = Style_musical.get_all_styles(), Groupe = Groupe, Lieu = Lieu, style = 0)
 
 @app.route("/reservation/<string:id>", methods=['GET', 'POST'])
 @app.route("/reservation", methods=['GET', 'POST'])

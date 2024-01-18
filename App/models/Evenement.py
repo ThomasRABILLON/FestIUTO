@@ -1,5 +1,6 @@
 from ..app import db
 
+
 import time
 
 class Evenement(db.Model):
@@ -101,6 +102,14 @@ class Evenement(db.Model):
     @staticmethod
     def get_evenements_by_type_evenement(type_evenement):
         return Evenement.query.filter_by(id_type_evenement=type_evenement.get_id_type_evenement()).all()
+
+    @staticmethod
+    def get_evenements_by_style(id_style: int, groupe):
+        events = []
+        for event in Evenement.get_all_evenements():
+            if groupe.get_groupe_by_id(event.get_id_g()).get_id_style() == id_style:
+                events.append(event)
+        return events
 
     @staticmethod
     def get_evenements_by_jour(jour: int):

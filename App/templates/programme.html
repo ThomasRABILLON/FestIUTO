@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block main %}
+
+<h1 class="text-center mb-5">Programme</h1>
+<main class="mb-5">
+    <div class="container-sm">
+        <form action="{{ url_for('programme') }}" method="get" class="p-4">
+            <div class="input-group">
+                <label for="style" class="input-group-text">Trié par style musical :</label>
+                <select name="style" id="style" class="form-select" onchange="this.form.submit()">
+                    <option value="0" class="text-dark">Tous</option>
+                    {% for style in styles %}
+                        {% if style.get_id() == id_style %}
+                            <option value="{{ style.get_id() }}" class="text-dark" selected>{{ style.get_libelle() }}</option>
+                        {% else %}
+                            <option value="{{ style.get_id() }}" class="text-dark">{{ style.get_libelle() }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        <div class="row row-cols-4">
+        {% for event in events %}
+                <div class="col m-5 pt-2 border rounded">
+                    <a href="{{ url_for('groupe', id = Groupe.get_groupe_by_id(event.get_id_g()).get_id()) }}" style="text-decoration: none;"><h3 class="mb-3 pb-3 text-center border-bottom">{{ Groupe.get_groupe_by_id(event.get_id_g()).get_nom_groupe() }}</h3></a>
+                    <div class="container-sm mb-3">
+                        <div class="row mb-2">
+                            <span>Journée {{ event.get_jour_deb() }} à {{event.get_heure_deb().strftime('%Hh%M')}}</span>
+                        </div>
+                        <div class="row text-break">
+                            <span>{{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_nom() }}, emplacement: {{ Lieu.get_lieu_by_id(event.get_id_lieu()).get_emplacement() }}</span>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+        </div>
+    </div>
+</main>
+
+{% endblock %}
