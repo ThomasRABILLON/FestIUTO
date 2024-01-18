@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block main %}
 
+<div>
 <link rel="stylesheet" href="{{ url_for('static', filename = 'css/home.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename = 'css/groupes.css') }}" />
 <img src="../static/images/festival-banners-image.jpg" alt="festival-banners-image" class="banner" />
@@ -24,4 +25,5 @@
   {% endfor %}
 
   {% endblock %}
+</div>
 </div>
