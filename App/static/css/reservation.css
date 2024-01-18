@@ -16,6 +16,7 @@ main {
   margin-bottom: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 /* Clear the float to prevent layout issues */
@@ -29,6 +30,7 @@ main {
   color: #ffffff;
   font-size: 1.5em;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 /* Style the paragraphs within each reservation block */
