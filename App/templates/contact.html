@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% block main %}
+
+<h1>Qui sommes-nous ?</h1>
+
+<link rel="stylesheet"
+    href="{{ url_for('static', filename='css/home.css') }}">
+<main>
+
+    <div>
+        <p class="textcont">Bienvenue chez nous, une équipe passionnée dédiée à
+            créer des expériences exceptionnelles lors de festivals et de
+            concerts musicaux. Nous sommes bien plus qu'une équipe d'organisateurs
+            d'événements ; nous sommes des facilitateurs de souvenirs
+            inoubliables, des architectes de moments magiques et des gardiens de
+            votre sécurité et de votre bonheur.</p>
+        <p class="textcont">
+            Notre Mission :
+            Nous croyons fermement que la musique a le pouvoir de rassembler les
+            gens, de transcender les frontières et de créer des liens durables.
+            Notre mission est de vous offrir des festivals et des concerts
+            mémorables, où la musique vous transporte et où chaque instant
+            devient une partie intégrante de votre histoire.
+
+        </p>
+    </div>
+
+</main>
+
+<section class="suiteAccueil">
+    <div class="bloc">
+        <h2 class="titrebloc">Contactez-Nous</h2>
+        <img class="imgbloc" src="../static/images/logo.png" alt="logo">
+        <p>N'hésitez pas à nous contacter pour toute question ou demande d'information
+            :</p>
+        <address>
+            <strong>Email :</strong> <a href="ARY@FestIUT'O.com">ARY@FestIUT'O.com</a><br>
+            <strong>Téléphone :</strong> +06 36 89 84 50 60<br>
+            <strong>Adresse :</strong> 96 Rue Issoudin, Orléans, FRANCE<br>
+        </address>
+    </div>
+    <div class="bloc">
+        <h2 class="titrebloc">Acheter maintenant</h2>
+        <a href="{{ url_for('billet') }}"><img class="imgbloc"
+                src="../static/images/ticket.png" alt="logo"></a>
+        <p>🎵
+            Préparez-vous à vivre une aventure musicale inoubliable au cœur de
+            notre festival sensationnel. Plongez dans une mer de mélodies
+            enivrantes, explorez des sons variés et laissez-vous emporter par l'énergie
+            électrisante des performances live🎵</p>
+    </div>
+
+    <div class="bloc">
+        <h2 class="titrebloc">Inscrivez-vous</h2>
+        <a href="{{ url_for('register') }}"><img class="imgalone"
+                src="../static/images/image_accueil_bas_concert"
+                alt="logo"></a>
+        <p class="texteaccueil">
+            Nous sommes ravis de vous inviter à un concert extraordinaire qui
+            promet de faire vibrer votre âme. Plongez au cœur de l'énergie
+            musicale, entourés d'une atmosphère envoûtante et de performances
+            captivantes.</p>
+    </div>
+</section>
+
+{% endblock %}

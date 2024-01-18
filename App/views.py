@@ -25,6 +25,10 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     return render_template('home.html', events = Evenement.get_all_evenements(), Groupe = Groupe, Lieu = Lieu)
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/billet')
 def billet():
     return render_template('billet.html', billet1 = Type_billet.get_type_billet_by_id(1), billet2 = Type_billet.get_type_billet_by_id(2), billet3 = Type_billet.get_type_billet_by_id(3))

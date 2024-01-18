@@ -188,3 +188,12 @@ section.presentation {
 .textetop {
   margin-top: 2em;
 }
+
+.textcont {
+  margin-top: 2em;
+  font-size: 1.3em;
+}
+
+.gros {
+  padding: 10em;
+}

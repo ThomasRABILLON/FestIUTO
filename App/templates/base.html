@@ -29,7 +29,7 @@
         <li><a href="{{ url_for('billet') }}">Billet</a></li>
         <li><a href="{{ url_for('reservation') }}">Reservation</a></li>
         <li><a href="{{ url_for('groupes') }}">Les groupes</a></li>
-        <li><a href="#">Nous contacter</a></li>
+        <li><a href="{{ url_for('contact') }}">Nous contacter</a></li>
         <li>
           <div class="dropdown">
             <img
@@ -60,7 +60,8 @@
           <a href="#" class="about-us">FestIUT@fr.com</a>
         </div>
         <div class="footer-section">
-          <img src="../static/images/logo.png" alt="Image 4">
+          <a href="{{ url_for('home') }}"><img class="imgbloc"
+              src="../static/images/logo.png" alt="logo"></a>
         </div>
       </div>
     </footer>
