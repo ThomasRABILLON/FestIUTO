@@ -1,0 +1,34 @@
+A_LIEU, 11 Evenement, 0N Lieu
+Evenement: ref_evenement, jour_deb, heure_deb, jour_fin, heure_fin, duree, temps_montage, temps_demontage, est_public, nb_place, a_preinscription
+EST_TYPE_EVENEMENT, 11 Evenement, 0N Type_Evemenent
+Type_Evemenent: id_type_evenement, libelle
+:
+:
+
+Lieu: id_lieu, nom_lieu, emplacement
+Est_Inscrit, 0N Spectateur, 0N Evenement
+EST_FAIT, 0N Groupe, 11 Evenement
+Style_Musical: id_style, libelle
+Artiste: id_art, nom, prenom
+JOUE, 0N Intrument, 11 Artiste
+
+APPARTIENT, 0N Spectateur, 11 Billet
+Spectateur: mail, nom, prenom, mot_de_passe, date_naissance
+A_Favori, 0N Spectateur, 0N Groupe
+EST_STYLE, 11 Groupe, 0N Style_Musical
+Fait_Partie, 0N Groupe, 11 Artiste
+Intrument: id_instru, nom_instru
+
+Billet: id_billet, debut_validite, fin_validite
+Hebergement: id_hebergement, nom_hebergement, nb_place_jour
+Est_Heberger, 0N Groupe, 0N Hebergement: date_debut, date_fin
+Groupe: id_g, nom_groupe, description
+A_LIEN_VIDEO, 11 lien_video, 0N Groupe
+Lien_video: id_lien_video, lien_video
+
+EST_TYPE, 0N Type_Billet, 11 Billet
+Type_Billet: id_type_billet, libelle, duree, prix
+Photo: id_ph, photo
+A_PHOTO, 11 Photo, 0N Groupe
+A_LIEN_RS, 11 Lien_rs, 0N Groupe
+Lien_rs: id_lien_rs, lien_rs

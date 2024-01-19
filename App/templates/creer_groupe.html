@@ -1,5 +1,6 @@
 {% extends 'admin.html' %} {% block main %}
 
+<div class="constainer-sm m-5 pt-5">
 <form action="{{ url_for('creer_groupe') }}" method="post" class="row gx-3 gy-2 align-items-center">
     {{ form.csrf_token }}
     <div class="input-group mb-3">
@@ -16,5 +17,7 @@
     </div>
     <input type="submit" value="Créer" class="btn btn-success">
 </form>
+</div>
+
 
 {% endblock %}

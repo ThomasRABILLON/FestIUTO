@@ -80,7 +80,7 @@ class ReserverEvenementForm(FlaskForm):
         return True
 
     def verif(self, ref_evenement: str, user: Spectateur) -> bool:
-        if Evenement.get_evenement_by_id(ref_evenement).get_est_public():
+        if Evenement.get_evenement_by_id(ref_evenement).get_est_public() and Est_Inscrit.get_inscription_by_spectateur_and_evenement(user.get_id(), ref_evenement) is None:
             return True
         if Est_Inscrit.get_inscription_by_spectateur_and_evenement(user.get_id(), ref_evenement) is None:
             for billet in Billet.get_billet_by_spectateur(user.get_id()):

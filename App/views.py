@@ -175,7 +175,7 @@ def upload_image(nom):
             image = request.files['image'].read()
             id_g = Groupe.get_groupe_by_nom(nom).get_id()
             Photo.insert_new_photo(image, id_g)
-    return redirect(url_for('gestion_groupes'))
+    return redirect(url_for('gestion_groupe', nom = nom))
 
 @app.route('/admin/gestion_groupe/<string:nom>')
 @login_required

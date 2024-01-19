@@ -5,6 +5,14 @@
     <p class="fs-6 text">{{ groupe.get_description() }}</p>
     <p  class="fs-6 text">Style : {{ Style_musical.get_style_by_id(groupe.get_id_style()).get_libelle() }}</p>
     <br>
+    <form action="{{ url_for('groupe', id=groupe.get_id()) }}" method="post" class="mb-3">
+      {{ form.csrf_token }}
+      {% if est_favorit %}
+        <input type="submit" value="Retirer des favoris" class="btn btn-danger">
+      {% else %}
+        <input type="submit" value="Ajouter aux favoris" class="btn btn-success">
+      {% endif %}
+    </form>
     <h3 class="fs-4 text">Les artistes</h3>
     {% if artistes|length == 0 %}
     <p class="fs-6 text">Aucun artiste dans ce groupe</p>
@@ -62,14 +70,6 @@
         </button>
     </div>
     {% endif %}
-    <form action="{{ url_for('groupe', id=groupe.get_id()) }}" method="post">
-      {{ form.csrf_token }}
-      {% if est_favorit %}
-        <input type="submit" value="Retirer des favoris" class="btn btn-danger">
-      {% else %}
-        <input type="submit" value="Ajouter aux favoris" class="btn btn-success">
-      {% endif %}
-    </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
