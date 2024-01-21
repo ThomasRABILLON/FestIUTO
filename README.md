@@ -1,27 +1,18 @@
-<style>
-b { color: blue}
-r { color: red}
-a { color: aquamarine}
-a1 {color: aqua}
-</style>
 
-# <r>FestIUT'O</r>
+### Evann YANG, Thomas RABILLON, Théo AVIGNON
 
-# <b>Evann YANG Thomas RABILLON Théo AVIGNON</b>
+# FestIUT'O
 
-## <a1>Comment lancer le site web<a1>
+## Comment lancer le site web
 
-Pour lancer le site web il faut d'abord installer des prérequis, qui sont les suivants :
+Pour lancer le site web il faut d'abord installer des prérequis, pour cela vous pouvez utiliser le fichier requirements :
 
-source venv/bin/ activate (optionnel)
-pip install flask
-pip install python-dotenv
-pip install bootstrap-flask
-pip install flask-sqlalchemy
-pip install flask-wtf
-pip install flask-login
+```bash
+pip install -r requirements.txt
+```
 
-(vous pouvez directement aller dans le terminal et taper la commande suivante : pip install -r requirements.txt)
-
-Enfin après avoir installé ces prérequis, il faut maintenant lancer la commande suivante : flask run
-Puis aller sur le lien donné dans le terminal
+Enfin après avoir installé ces prérequis, vous pouvez executer le script "run-festiuto.sh", avec la commande suivante :
+```bash
+./run-festiuto.sh
+```
+Ce script va initialiser (ou réinitialiser) la base de donnée puis lancer le projet Flask. Puis aller sur le lien donné dans le terminal
